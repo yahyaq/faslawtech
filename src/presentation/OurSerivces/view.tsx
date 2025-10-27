@@ -1,124 +1,294 @@
 // components/views/KeyServicesView.tsx
 "use client";
 
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const services = [
-  {
-    title: "Companies and Business Sector",
-    description: [
-      "Set up companies of all types (national/foreign/mixed) until they acquire legal status.",
-      "Register and protect intellectual property rights (trade names/trademarks/patents).",
-      "Manage governance processes, mergers, and acquisitions.",
-      "Handle bankruptcy and liquidation procedures.",
-      "Provide legal support, representation, and consultancy services.",
-    ],
-  },
-  {
-    title: "Commercial Franchise",
-    description: [
-      "Draft franchise agreements to ensure the proper application of Franchise Law and its executive regulations.",
-      "Document franchise agreements at the Commercial Franchise Centre.",
-    ],
-  },
-  {
-    title: "Intellectual Property Rights",
-    description: [
-      "Register patents and copyrights.",
-      "Register trademarks.",
-      "Object and dispute the use and registration of trademarks.",
-    ],
-  },
-  {
-    title: "Formulation of Contracts and Agreements",
-    description: [
-      "Draft, review, and amend memorandums of understanding, commercial contracts, agreements, employment contracts, and both private and public entity regulations.",
-    ],
-  },
-  {
-    title: "Litigation and Dispute Settlement",
-    description: [
-      "Resolve disputes through alternative methods such as mediation, arbitration, negotiation, and conciliation.",
-      "Provide legal representation before general and administrative courts at all levels.",
-      "Represent clients before quasi-judicial committees.",
-    ],
-  },
-  {
-    title: "Legal Consultations",
-    description: [
-      "Offer legal opinions and consultations across various fields to protect clients’ rights and interests.",
-    ],
-  },
-  {
-    title: "Wills, Endowments, and Real-Estate Settlement",
-    description: [
-      "Execute wills and endowments in compliance with Islamic law.",
-      "Handle Real Estate settlement, inheritance, and division of assets in a legitimate and fair manner.",
-    ],
-  },
-  {
-    title: "Debt Collection and Execution",
-    description: [
-      "File financial claims in preliminary courts.",
-      "Execute court orders and arbitrators’ decisions.",
-      "Execute commercial documents (checks, promissory notes, bills of exchange).",
-      "Execute financial debt declarations issued by notaries.",
-    ],
-  },
-];
+// ---- Static image imports (place your files under /src/assets/law-images) ----
+import imgCompanies from "@/assets/law-images/legal-entities.jpg";
+import imgFranchise from "@/assets/law-images/franchise.jpg";
+import imgContracts from "@/assets/law-images/legal-drafting.jpg";
+import imgConsult from "@/assets/law-images/legal-advice.jpg";
+import imgLitigation from "@/assets/law-images/litigation.jpg";
+import imgWills from "@/assets/law-images/happy-family.jpg";
+import imgDebt from "@/assets/law-images/debt.jpg";
+
+// Optional: if you add an IP image later, import it here
+// import imgIP from "@/assets/law-images/intellectual-property.jpg";
+
+// -----------------------------------------------------------------------------
+
+type Service = {
+  title: string;
+  bullets: string[];
+  img: StaticImageData;
+  // If you later add a "deep link" per service, add href?: string
+};
+
+// Accessibility: reduced-motion
+function usePrefersReducedMotion() {
+  const query = useMemo(() => (typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null), []);
+  const prefers = query?.matches ?? false;
+  useEffect(() => {
+    const handler = () => {};
+    query?.addEventListener?.("change", handler);
+    return () => query?.removeEventListener?.("change", handler);
+  }, [query]);
+  return prefers;
+}
 
 export default function View() {
+  // Register GSAP plugins once on client
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+  }, []);
+
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Services content (from your PDF)
+  const services: Service[] = [
+    {
+      title: "Companies & Business Sector",
+      bullets: [
+        "Company setup (national/foreign/mixed) to legal status",
+        "IP registration (trade names, trademarks, patents)",
+        "Governance, M&A, bankruptcy & liquidation",
+        "Legal support, representation & consultancy",
+      ],
+      img: imgCompanies,
+    },
+    {
+      title: "Commercial Franchise",
+      bullets: [
+        "Draft franchise agreements aligned with law & regulations",
+        "Document agreements at the Commercial Franchise Centre",
+      ],
+      img: imgFranchise,
+    },
+    {
+      title: "Intellectual Property Rights",
+      bullets: [
+        "Register patents & copyrights",
+        "Register trademarks",
+        "Object to and dispute trademark use/registration",
+      ],
+      // img: imgIP, // add when available
+      img: imgContracts, // temporary visual; replace with dedicated IP image if you add one
+    },
+    {
+      title: "Contracts & Agreements",
+      bullets: [
+        "Draft/review MOUs, commercial & employment contracts",
+        "Draft/adapt regulations for private & public entities",
+      ],
+      img: imgContracts,
+    },
+    {
+      title: "Litigation & Dispute Settlement",
+      bullets: [
+        "ADR: mediation, arbitration, negotiation, conciliation",
+        "Representation before general & administrative courts",
+        "Representation before quasi-judicial committees",
+      ],
+      img: imgLitigation,
+    },
+    {
+      title: "Legal Consultations",
+      bullets: [
+        "Legal opinions & consultations across various fields",
+        "Focus on protecting clients’ rights & interests",
+      ],
+      img: imgConsult,
+    },
+    {
+      title: "Wills, Endowments & Real-Estate Settlement",
+      bullets: [
+        "Execute wills & endowments per Islamic law",
+        "Real-estate settlement, inheritance & asset division",
+      ],
+      img: imgWills,
+    },
+    {
+      title: "Debt Collection & Execution",
+      bullets: [
+        "File financial claims in preliminary courts",
+        "Execute court/arbitrator decisions & commercial docs",
+        "Execute notary-issued debt declarations",
+      ],
+      img: imgDebt,
+    },
+  ];
+
+  // GSAP scroll animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (!sectionRef.current || prefersReducedMotion) return;
+
+      // Panels: fade/slide in, image parallax, subtle scale
+      const panels = gsap.utils.toArray<HTMLElement>(".ks-panel");
+      panels.forEach((panel, idx) => {
+        const image = panel.querySelector(".ks-image") as HTMLElement | null;
+        const textBox = panel.querySelector(".ks-text") as HTMLElement | null;
+        const bullets = panel.querySelectorAll(".ks-bullet");
+
+        // panel entrance
+        gsap.from(textBox, {
+          opacity: 0,
+          y: 32,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 72%",
+            toggleActions: "play none none reverse",
+          },
+        });
+
+        // stagger bullets
+        gsap.from(bullets, {
+          opacity: 0,
+          y: 18,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 68%",
+          },
+        });
+
+        // image parallax + scale
+        if (image) {
+          gsap.fromTo(
+            image,
+            { yPercent: -8, scale: 0.98 },
+            {
+              yPercent: 8,
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: panel,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
+            }
+          );
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
+  // Detect RTL from <html dir="rtl"> or fallback to LTR
+  const isRTL =
+    typeof document !== "undefined"
+      ? document?.documentElement?.getAttribute("dir") === "rtl"
+      : false;
+
   return (
     <section
+      ref={sectionRef}
       id="key-services"
-      className="relative bg-gradient-to-b from-[#faf7f2] to-[#f0e4d2] py-24 overflow-hidden"
+      className="relative overflow-hidden bg-gradient-to-b from-[#faf7f2] to-[#f0e4d2]"
     >
-      {/* Background abstract gold pattern (for next step integration) */}
-      <div className="absolute inset-0 bg-[url('/textures/abstract-gold.webp')] bg-cover bg-center opacity-20" />
-
-      <div className="relative container mx-auto px-6 md:px-12 lg:px-20">
+      {/* Title block */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 pt-20 pb-6">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-semibold text-center text-[#9b7b16] mb-10"
+          transition={{ duration: 0.6 }}
+          className="text-center text-4xl md:text-5xl font-semibold text-[#9b7b16]"
         >
-          Key Services
+          Our Services
         </motion.h2>
-
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
           viewport={{ once: true }}
-          className="max-w-3xl mx-auto text-center text-gray-700 mb-16 leading-relaxed"
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="mx-auto max-w-3xl text-center text-gray-700 mt-3"
         >
-          Our firm provides a variety of legal services that help create a successful business
-          environment. These services assist companies, entrepreneurs, investors, and individuals in
-          achieving their goals while safeguarding their rights and interests.
+          A comprehensive suite of legal solutions for companies, investors, and individuals — delivered with precision and discretion.
         </motion.p>
+      </div>
 
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.7 }}
-              viewport={{ once: true }}
-              className="bg-white/70 backdrop-blur-md rounded-2xl shadow-md p-6 border border-[#e8d9b9] hover:shadow-lg hover:-translate-y-1 transition-all"
+      {/* Panels */}
+      <div className="space-y-20 md:space-y-28">
+        {services.map((s, i) => {
+          // Alternate layout, but mirror when RTL
+          const imgLeft = (i % 2 === 0) !== isRTL;
+          return (
+            <div
+              key={s.title}
+              className="ks-panel container mx-auto px-6 md:px-12 lg:px-20"
             >
-              <h3 className="text-xl font-semibold text-[#9b7b16] mb-3">
-                {service.title}
-              </h3>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm leading-relaxed">
-                {service.description.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+              <div
+                className={[
+                  "relative grid items-center gap-8 md:gap-12",
+                  "md:grid-cols-12",
+                ].join(" ")}
+              >
+                {/* Image */}
+                <div
+                  className={[
+                    "relative ks-image h-[40vh] md:h-[64vh] rounded-2xl overflow-hidden shadow-md md:col-span-7",
+                    imgLeft ? "order-1" : "order-2 md:col-start-6",
+                  ].join(" ")}
+                >
+                  <Image
+                    src={s.img}
+                    alt={s.title}
+                    fill
+                    priority={i < 2}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                  {/* soft overlay for contrast */}
+                  <div className="absolute inset-0 bg-white/10" />
+                </div>
+
+                {/* Text */}
+                <div
+                  className={[
+                    "ks-text md:col-span-5",
+                    imgLeft ? "order-2 md:col-start-8" : "order-1",
+                  ].join(" ")}
+                >
+                  <h3 className="text-2xl md:text-3xl font-semibold text-[#9b7b16]">
+                    {s.title}
+                  </h3>
+                  <div className="mt-2 h-1 w-28 rounded-full bg-[#9b7b16]" />
+                  <ul className="mt-5 space-y-2 text-gray-800">
+                    {s.bullets.map((b, idx) => (
+                      <li key={idx} className="ks-bullet flex items-start gap-2">
+                        <span className="mt-2 inline-block h-2 w-2 rounded-full bg-[#9b7b16]" />
+                        <span className="leading-relaxed">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Section CTA (no “Learn more” per your request; simple contact anchor) */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 py-14">
+        <div className="flex justify-center">
+          <a
+            href="#contact"
+            className="inline-flex items-center rounded-lg bg-[#9b7b16] px-6 py-3 text-white font-medium shadow hover:bg-[#7e6412] transition-colors"
+          >
+            Schedule a Consultation
+          </a>
         </div>
       </div>
     </section>

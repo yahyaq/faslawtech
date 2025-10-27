@@ -1,0 +1,168 @@
+// // components/views/KeyServicesView.tsx
+// "use client";
+
+// import { motion } from "framer-motion";
+// import { FaBuilding, FaHandshake, FaLightbulb, FaFileContract, FaGavel, FaComments, FaHome, FaMoneyBillWave } from "react-icons/fa";
+
+// type Service = {
+//   icon: React.ReactNode;
+//   title: string;
+//   description: string[];
+//   link?: string;
+// };
+
+// const services: Service[] = [
+//   {
+//     icon: <FaBuilding className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Companies & Business Sector",
+//     description: [
+//       "Company setup (national/foreign/mixed) to legal registration.",
+//       "Intellectual property registration (trade names, trademarks, patents).",
+//       "Governance, mergers & acquisitions support.",
+//       "Bankruptcy & liquidation procedures.",
+//       "Legal consultancy, representation & compliance services.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaHandshake className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Commercial Franchise",
+//     description: [
+//       "Draft franchise agreements aligned with Franchise Law & regs.",
+//       "Register franchise documentation at the Commercial Franchise Centre.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaLightbulb className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Intellectual Property Rights",
+//     description: [
+//       "Patent & copyright registration.",
+//       "Trademark registration.",
+//       "Trademark objections & dispute resolution.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaFileContract className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Contracts & Agreements",
+//     description: [
+//       "Draft/review MOUs, commercial & employment contracts.",
+//       "Draft/adapt regulations for private & public entities.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaGavel className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Litigation & Dispute Settlement",
+//     description: [
+//       "Alternative dispute resolution (mediation, arbitration, negotiation).",
+//       "Representation before general & admin courts at all levels.",
+//       "Representation before quasi-judicial committees.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaComments className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Legal Consultations",
+//     description: [
+//       "Legal opinions & consultations across varied fields to safeguard clients’ rights.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaHome className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Wills, Endowments & Real-Estate Settlement",
+//     description: [
+//       "Wills & endowments executed under Islamic law compliance.",
+//       "Real-estate settlement, inheritance & asset division in legitimate manner.",
+//     ],
+//     link: "#",
+//   },
+//   {
+//     icon: <FaMoneyBillWave className="text-[#9b7b16] w-8 h-8" />,
+//     title: "Debt Collection & Execution",
+//     description: [
+//       "Financial claims filed in preliminary courts.",
+//       "Execute court/arbitrator decisions & commercial documents (checks, promissory notes).",
+//       "Execute notary-issued financial debt declarations.",
+//     ],
+//     link: "#",
+//   },
+// ];
+
+// export default function KeyServicesView() {
+//   return (
+//     <section
+//       id="key-services"
+//       className="relative bg-gradient-to-b from-[#faf7f2] to-[#f0e4d2] py-20 overflow-hidden"
+//     >
+//       {/* Background texture */}
+//       <div className="absolute inset-0 bg-[url('/textures/abstract-gold.webp')] bg-cover bg-center opacity-10 pointer-events-none" aria-hidden="true" />
+
+//       <div className="relative container mx-auto px-6 md:px-12 lg:px-20">
+//         <motion.h2
+//           initial={{ opacity: 0, y: 20 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.8 }}
+//           viewport={{ once: true }}
+//           className="text-4xl md:text-5xl font-semibold text-center text-[#9b7b16] mb-8"
+//         >
+//           Our Key Services
+//         </motion.h2>
+
+//         <motion.p
+//           initial={{ opacity: 0, y: 20 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.2, duration: 0.8 }}
+//           viewport={{ once: true }}
+//           className="max-w-3xl mx-auto text-center text-gray-700 mb-12 leading-relaxed"
+//         >
+//           We provide comprehensive legal services designed to support businesses, investors, and individuals. Explore how we can assist you across our specialised practice areas.
+//         </motion.p>
+
+//         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+//           {services.map((service, index) => (
+//             <motion.div
+//               key={service.title}
+//               initial={{ opacity: 0, y: 30 }}
+//               whileInView={{ opacity: 1, y: 0 }}
+//               transition={{ delay: index * 0.1, duration: 0.7 }}
+//               viewport={{ once: true }}
+//               className="bg-white/80 backdrop-blur-md rounded-2xl shadow-md p-8 border border-[#e8d9b9] hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+//             >
+//               <div className="flex items-center mb-4">
+//                 {service.icon}
+//                 <h3 className="ml-3 text-2xl font-semibold text-[#9b7b16]">{service.title}</h3>
+//               </div>
+//               <ul className="list-disc list-inside text-gray-700 space-y-2 text-sm leading-relaxed">
+//                 {service.description.map((item, i) => (
+//                   <li key={i}>{item}</li>
+//                 ))}
+//               </ul>
+//               {service.link && (
+//                 <div className="mt-4">
+//                   <a
+//                     href={service.link}
+//                     className="inline-block text-[#9b7b16] font-medium underline hover:no-underline"
+//                   >
+//                     Learn more →
+//                   </a>
+//                 </div>
+//               )}
+//             </motion.div>
+//           ))}
+//         </div>
+
+//         <div className="text-center mt-12">
+//           <a
+//             href="#contact"
+//             className="inline-block bg-[#9b7b16] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#7e6412] transition-colors duration-200"
+//           >
+//             Schedule a Free Consultation
+//           </a>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
