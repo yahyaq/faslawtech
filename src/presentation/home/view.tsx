@@ -7,6 +7,7 @@ import AboutUsView from "@/presentation/aboutUs/view"
 import OurPhilosophyView from "@/presentation/OurPhilosophy/view"
 import OurValuesView from "@/presentation/ourValues/view"
 import OurServicesView from "@/presentation/OurSerivces/view"
+import LicensesAndPartnersView from "@/presentation/licensesAndPartners/view"
 
 export default function View(){
     return (
@@ -16,6 +17,7 @@ export default function View(){
       <AboutUsView/>
       <OurPhilosophyView/>
       <OurValuesView/>
+      <LicensesAndPartnersView/>
       <OurServicesView/>
     </main>
   );
