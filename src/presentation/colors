@@ -1,0 +1,29 @@
+Main colors
+
+| Shade   | Hex       | Usage Suggestion             |
+| :------ | :-------- | :--------------------------- |
+| **50**  | `#FBF7E8` | Very light gold background   |
+| **100** | `#F6EBC4` | Light section background     |
+| **200** | `#F0DD9B` | Card background / hover      |
+| **300** | `#EACD6F` | Accent highlight             |
+| **400** | `#DFB93F` | Buttons / links hover        |
+| **500** | `#C8A128` | **Main brand color (logo)**  |
+| **600** | `#AA8822` | Active states / icons        |
+| **700** | `#8E6E1C` | Headings / dark gold tone    |
+| **800** | `#5C4913` | Dark backgrounds             |
+| **900** | `#32270A` | Deep contrast or footer tone |
+
+Seconday colors
+
+| Shade   | Hex       | Usage Suggestion                            |
+| :------ | :-------- | :------------------------------------------ |
+| **50**  | `#F4F6FA` | Very light background                       |
+| **100** | `#E1E7F1` | Light background / section divider          |
+| **200** | `#C9D4E4` | Card background                             |
+| **300** | `#A9BBD4` | Hover / borders                             |
+| **400** | `#7C97BD` | Buttons / icons                             |
+| **500** | `#4C6FA3` | **Main secondary color (Royal Slate Blue)** |
+| **600** | `#3E5E8A` | Active links / hover states                 |
+| **700** | `#2F4B6F` | Headings or contrast text on light gold     |
+| **800** | `#1E324D` | Deep accents / footers with gold text       |
+| **900** | `#111C2E` | Rich dark blue-black background             |
