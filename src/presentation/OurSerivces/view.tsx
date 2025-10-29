@@ -68,7 +68,6 @@ export default function KeyServicesView() {
     },
   ];
 
-  // GSAP Scroll Animation Setup
   useEffect(() => {
     const ctx = gsap.context(() => {
       const panels = gsap.utils.toArray<HTMLElement>(".service-panel");
@@ -91,7 +90,7 @@ export default function KeyServicesView() {
           {
             scale: 1,
             opacity: 1,
-            duration: 1.6,
+            duration: 1.4,
             ease: "power2.out",
           }
         ).fromTo(
@@ -100,14 +99,15 @@ export default function KeyServicesView() {
           {
             y: 0,
             opacity: 1,
-            duration: 1,
+            duration: 0.9,
             ease: "power3.out",
           },
           "-=1"
         );
 
+        // Parallax scroll
         gsap.to(img, {
-          yPercent: 12,
+          yPercent: 8,
           ease: "none",
           scrollTrigger: {
             trigger: panel,
@@ -125,22 +125,25 @@ export default function KeyServicesView() {
   return (
     <section
       id="key-services"
-      className="relative bg-[#0e0e0e] text-white overflow-hidden"
+      className="relative text-white overflow-hidden bg-gradient-to-b from-[#faf7f2] via-[#eae2c8]/30 to-[#0e0e0e]"
     >
-      {/* Section divider for flow */}
+      {/* Gentle transition from “Our Values” */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#faf7f2] via-[#d9ccaa]/50 to-transparent z-10 pointer-events-none" />
+
+      {/* Decorative divider */}
       <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 1 }}
-        className="h-[2px] bg-[#bfa14a] w-3/4 mx-auto mt-20 origin-left"
+        className="h-[2px] bg-[#bfa14a] w-3/4 mx-auto mt-24 origin-left"
       />
 
-      {/* Header */}
-      <div className="text-center py-24 px-6 bg-gradient-to-b from-[#0e0e0e] via-[#1a1a1a] to-[#191716]">
-        <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-4 tracking-tight drop-shadow-[0_0_12px_rgba(245,217,127,0.4)]">
+      {/* Section Header */}
+      <div className="text-center py-24 px-6 bg-gradient-to-b from-[#e8dec2]/30 via-[#1a1a1a]/80 to-[#111]">
+        <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-4 drop-shadow-[0_0_10px_rgba(245,217,127,0.4)]">
           Our Services
         </h2>
-        <p className="max-w-2xl mx-auto text-gray-300 leading-relaxed text-lg">
+        <p className="max-w-2xl mx-auto text-gray-200 leading-relaxed text-lg">
           Empowering businesses and individuals through precision-driven legal
           expertise — from company formation to complex dispute resolution.
         </p>
@@ -150,7 +153,7 @@ export default function KeyServicesView() {
       {services.map((s, i) => (
         <div
           key={s.title}
-          className={`service-panel relative flex flex-col md:flex-row items-center justify-center min-h-[80vh] overflow-hidden -mt-[1px]`}
+          className="service-panel relative flex flex-col md:flex-row items-center justify-center min-h-[80vh] overflow-hidden -mt-[1px]"
         >
           {/* Background Image */}
           <div className="absolute inset-0">
@@ -159,34 +162,34 @@ export default function KeyServicesView() {
               alt={s.title}
               fill
               placeholder="blur"
-              className="object-cover panel-img scale-105 brightness-[0.85]"
+              className="object-cover panel-img scale-105 brightness-[0.95] contrast-[1.05]"
               loading={i < 2 ? "eager" : "lazy"}
               sizes="100vw"
             />
-            {/* Layered gradients for depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+
+            {/* Softer vignette gradients */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e]/70 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0e0e0e]/70 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-black/25" />
           </div>
 
           {/* Text Block */}
           <div
-            className={`panel-text relative z-10 max-w-3xl mx-auto px-8 py-8 md:py-10 rounded-3xl backdrop-blur-md bg-black/40 shadow-[0_0_40px_rgba(0,0,0,0.5)] ${
+            className={`panel-text relative z-10 max-w-3xl mx-auto px-8 py-10 md:py-12 rounded-3xl backdrop-blur-md bg-black/30 shadow-[0_0_30px_rgba(0,0,0,0.4)] ${
               i % 2 === 0
                 ? "md:text-left md:ml-[8%]"
                 : "md:text-right md:mr-[8%]"
             }`}
           >
-            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-[#f5d97f] drop-shadow-[0_0_14px_rgba(245,217,127,0.5)] leading-snug">
+            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-[#f5d97f] drop-shadow-[0_0_10px_rgba(245,217,127,0.5)] leading-snug">
               {s.title}
             </h3>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
               {s.desc}
             </p>
-
-            {/* Subtle underline accent */}
             <motion.div
               initial={{ width: 0 }}
-              whileInView={{ width: "6rem" }}
+              whileInView={{ width: "5rem" }}
               transition={{ duration: 0.8 }}
               className={`h-[3px] bg-[#bfa14a] mt-6 rounded-full ${
                 i % 2 === 0 ? "ml-0" : "ml-auto"
@@ -194,13 +197,14 @@ export default function KeyServicesView() {
             />
           </div>
 
-          {/* Bottom fade for seamless panel merging */}
-          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0e0e0e] via-transparent to-transparent pointer-events-none" />
+          {/* Edge fades to keep images blended */}
+          <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-[#0e0e0e]/70 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#0e0e0e]/70 via-transparent to-transparent pointer-events-none" />
         </div>
       ))}
 
-      {/* Call-to-Action */}
-      <div className="text-center py-24 bg-gradient-to-t from-[#191716] via-[#1a1a1a] to-[#0e0e0e]">
+      {/* CTA */}
+      <div className="text-center py-24 bg-gradient-to-t from-[#111] via-[#1a1a1a]/80 to-[#0e0e0e]/60">
         <motion.a
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
