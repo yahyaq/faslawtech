@@ -18,10 +18,10 @@ export default function OurServicesView() {
   return (
     <section
       id="our-services"
-      className="relative py-32 bg-gradient-to-b from-[#1a1a1a] via-[#111] to-[#0e0e0e] text-white overflow-hidden"
+      className="relative py-32 bg-gradient-to-b from-[#f5f0da] via-[#e8dec0]/60 to-[#d4c9a4]/40 text-[#222] overflow-hidden"
     >
-      {/* Smooth top transition */}
-      <div className="" />
+      {/* Smooth top transition from Licenses & Partners (white) */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white via-[#f8f2df]/80 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Intro */}
@@ -29,11 +29,12 @@ export default function OurServicesView() {
           <p className="text-[#bfa14a] font-semibold mb-3 uppercase tracking-widest">
             Our Expertise
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-6 leading-tight drop-shadow-[0_0_15px_rgba(245,217,127,0.4)]">
+          <h2 className="text-4xl md:text-5xl font-semibold text-[#9b7b16] mb-6 leading-tight drop-shadow-[0_0_10px_rgba(155,123,22,0.2)]">
             Comprehensive Legal Solutions
           </h2>
-          <p className="text-gray-300 text-lg leading-relaxed">
-            Our firm provides integrated legal services that unite tradition, innovation, and precision — guiding businesses and individuals through complex legal landscapes with clarity and confidence.
+          <p className="text-[#333] text-lg leading-relaxed">
+            Our firm provides integrated legal services that unite tradition, innovation, and precision —
+            guiding businesses and individuals through complex legal landscapes with clarity and confidence.
           </p>
         </div>
 
@@ -44,22 +45,26 @@ export default function OurServicesView() {
               key={service.title}
               whileHover={{
                 scale: 1.03,
-                boxShadow: "0 0 20px rgba(191,161,74,0.35)",
+                boxShadow: "0 0 25px rgba(191,161,74,0.35)",
               }}
+              transition={{ type: "spring", stiffness: 300, damping: 18 }}
               className={`relative p-6 rounded-2xl bg-gradient-to-br ${
                 i % 2 === 0
-                  ? "from-[#1f1f1f]/80 to-[#252525]/60"
-                  : "from-[#222]/70 to-[#151515]/60"
-              } border border-[#bfa14a]/10 group transition-all duration-300 hover:border-[#bfa14a]/40`}
+                  ? "from-[#ffffff]/70 to-[#f5edd0]/70"
+                  : "from-[#f8f3de]/70 to-[#efe3b7]/60"
+              } border border-[#d6c99d]/50 group transition-all duration-300 hover:border-[#bfa14a]/70 hover:bg-[#fffaf2]/80 backdrop-blur-sm`}
             >
-              <div className="absolute -top-5 left-6 bg-[#bfa14a]/20 p-2 rounded-full group-hover:bg-[#bfa14a]/40 transition-colors">
-                <Check className="w-5 h-5 text-[#f5d97f]" strokeWidth={3} />
+              {/* Icon */}
+              <div className="absolute -top-5 left-6 bg-[#bfa14a]/25 p-2 rounded-full group-hover:bg-[#bfa14a]/45 transition-colors duration-300 shadow-[0_0_10px_rgba(191,161,74,0.2)]">
+                <Check className="w-5 h-5 text-[#9b7b16]" strokeWidth={3} />
               </div>
+
+              {/* Text */}
               <div className="mt-4">
-                <h3 className="font-semibold text-xl text-[#f5d97f] mb-2 group-hover:text-[#ffe89b] transition-all">
+                <h3 className="font-semibold text-xl text-[#9b7b16] mb-2 group-hover:text-[#bfa14a] transition-all duration-300">
                   {service.title}
                 </h3>
-                <p className="text-gray-300 text-sm leading-relaxed tracking-wide group-hover:text-gray-100 transition-colors">
+                <p className="text-[#333] text-sm leading-relaxed tracking-wide group-hover:text-[#111] transition-colors duration-300">
                   {service.desc}
                 </p>
               </div>
@@ -68,8 +73,11 @@ export default function OurServicesView() {
         </div>
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0e0e0e] via-transparent to-transparent" />
+      {/* Subtle radial highlight for warmth */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(191,161,74,0.1),transparent_75%)] pointer-events-none" />
+
+      {/* Bottom transition to next dark section */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#d4c9a4]/50 via-transparent to-transparent pointer-events-none" />
     </section>
   );
 }
