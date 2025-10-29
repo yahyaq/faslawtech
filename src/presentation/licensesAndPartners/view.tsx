@@ -88,7 +88,7 @@ export default function View() {
       </div>
 
       {/* Gentle fade into dark next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0e0e0e]/90 via-[#1a1a1a]/60 to-transparent pointer-events-none" />
+      <div className="" />
     </section>
   );
 }

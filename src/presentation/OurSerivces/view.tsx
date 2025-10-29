@@ -21,7 +21,7 @@ export default function OurServicesView() {
       className="relative py-32 bg-gradient-to-b from-[#1a1a1a] via-[#111] to-[#0e0e0e] text-white overflow-hidden"
     >
       {/* Smooth top transition */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#f7f0db]/80 via-[#d6caa8]/40 to-transparent pointer-events-none" />
+      <div className="" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Intro */}
