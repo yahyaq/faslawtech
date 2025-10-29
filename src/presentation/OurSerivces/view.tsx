@@ -42,59 +42,72 @@ export default function OurServicesView() {
   return (
     <section
       id="our-services"
-      className="relative py-28 bg-gradient-to-b from-[#0e0e0e] via-[#1a1a1a] to-[#0e0e0e] text-white overflow-hidden"
+      className="relative py-32 bg-gradient-to-b from-[#0e0e0e] via-[#1a1a1a] to-[#0e0e0e] text-white overflow-hidden"
     >
-      {/* Smooth transition divider from previous section */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#faf7f2]/70 via-[#d6caa8]/30 to-transparent pointer-events-none" />
+      {/* Smooth transition divider */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#faf7f2]/80 via-[#d6caa8]/40 to-transparent pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-3 gap-16 relative z-10">
-        {/* Intro Column */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        {/* Intro Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="col-span-1"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <p className="text-[#bfa14a] font-semibold mb-2 uppercase tracking-wider">
+          <p className="text-[#bfa14a] font-semibold mb-3 uppercase tracking-widest">
             Our Expertise
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-6 leading-tight drop-shadow-[0_0_15px_rgba(245,217,127,0.35)]">
+          <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-6 leading-tight drop-shadow-[0_0_15px_rgba(245,217,127,0.4)]">
             Comprehensive Legal Solutions
           </h2>
-          <p className="text-gray-300 leading-relaxed text-lg max-w-md">
-            Our firm offers integrated legal services that combine precision,
-            technology, and integrity — empowering clients to navigate today’s
-            complex legal landscape with confidence.
+          <p className="text-gray-300 text-lg leading-relaxed">
+            Our firm provides integrated legal services that unite tradition,
+            innovation, and precision — guiding businesses and individuals through
+            complex legal landscapes with clarity and confidence.
           </p>
+
+          {/* Animated divider */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 1 }}
+            className="h-[2px] bg-[#bfa14a] w-24 mx-auto mt-8 origin-left"
+          />
         </motion.div>
 
         {/* Services Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          className="lg:col-span-2 grid sm:grid-cols-2 gap-x-10 gap-y-10"
+          transition={{ duration: 1 }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {services.map((service, i) => (
             <motion.div
               key={service.title}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 0 20px rgba(191,161,74,0.35)",
+              }}
               transition={{ type: "spring", stiffness: 300, damping: 18 }}
-              className="flex items-start space-x-4 group"
+              className={`relative p-6 rounded-2xl bg-gradient-to-br ${
+                i % 2 === 0
+                  ? "from-[#1a1a1a]/80 to-[#252525]/60"
+                  : "from-[#222]/70 to-[#151515]/60"
+              } border border-[#bfa14a]/10 group transition-all duration-300 hover:border-[#bfa14a]/40`}
             >
               {/* Icon */}
-              <div className="flex-shrink-0 mt-1">
-                <div className="rounded-full p-1.5 bg-[#bfa14a]/20 group-hover:bg-[#bfa14a]/40 transition-colors duration-300 shadow-[0_0_8px_rgba(191,161,74,0.3)]">
-                  <Check className="w-5 h-5 text-[#f5d97f]" strokeWidth={3} />
-                </div>
+              <div className="absolute -top-5 left-6 bg-[#bfa14a]/20 p-2 rounded-full shadow-[0_0_10px_rgba(191,161,74,0.3)] group-hover:bg-[#bfa14a]/40 transition-colors duration-300">
+                <Check className="w-5 h-5 text-[#f5d97f]" strokeWidth={3} />
               </div>
 
               {/* Text */}
-              <div>
-                <h3 className="font-semibold text-lg text-[#f5d97f] mb-1 group-hover:text-[#ffe89b] transition-all duration-300">
+              <div className="mt-4">
+                <h3 className="font-semibold text-xl text-[#f5d97f] mb-2 group-hover:text-[#ffe89b] transition-all duration-300">
                   {service.title}
                 </h3>
-                <p className="text-gray-300 leading-relaxed text-sm tracking-wide group-hover:text-gray-200 transition-colors duration-300">
+                <p className="text-gray-300 text-sm leading-relaxed tracking-wide group-hover:text-gray-100 transition-colors duration-300">
                   {service.desc}
                 </p>
               </div>
@@ -103,11 +116,10 @@ export default function OurServicesView() {
         </motion.div>
       </div>
 
-      {/* Bottom fade for continuity */}
+      {/* Decorative radial background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(191,161,74,0.06),transparent_70%)] pointer-events-none" />
+      {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0e0e0e] via-transparent to-transparent pointer-events-none" />
-
-      {/* Subtle radial gold highlight behind grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(191,161,74,0.08),transparent_70%)] pointer-events-none" />
     </section>
   );
 }
