@@ -6,13 +6,13 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import imgCompanies from "@/assets/law-images/png/legal-entities.png";
-import imgFranchise from "@/assets/law-images/png/franchise.png";
-import imgContracts from "@/assets/law-images/png/legal-drafting.png";
-import imgConsult from "@/assets/law-images/png/legal-advice.png";
-import imgLitigation from "@/assets/law-images/png/litigation.jpeg";
-import imgWills from "@/assets/law-images/png/happy-family.png";
-import imgDebt from "@/assets/law-images/png/debt.png";
+import imgCompanies from "@/assets/law-images/webp/legal-entities.webp";
+import imgFranchise from "@/assets/law-images/webp/franchise.webp";
+import imgContracts from "@/assets/law-images/webp/legal-drafting.webp";
+import imgConsult from "@/assets/law-images/webp/legal-advice.webp";
+import imgLitigation from "@/assets/law-images/webp/litigation.webp";
+import imgWills from "@/assets/law-images/webp/happy-family.webp";
+import imgDebt from "@/assets/law-images/webp/debt.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
