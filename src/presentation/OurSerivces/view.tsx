@@ -1,11 +1,12 @@
-// components/views/KeyServicesView.tsx
 "use client";
 
 import { useEffect } from "react";
 import Image, { StaticImageData } from "next/image";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// ---- Service Images ----
 import imgCompanies from "@/assets/law-images/png/legal-entities.png";
 import imgFranchise from "@/assets/law-images/png/franchise.png";
 import imgContracts from "@/assets/law-images/png/legal-drafting.png";
@@ -70,31 +71,44 @@ export default function KeyServicesView() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // fade-in text + parallax background image
-      gsap.utils.toArray<HTMLElement>(".service-panel").forEach((panel) => {
+      const panels = gsap.utils.toArray<HTMLElement>(".service-panel");
+
+      panels.forEach((panel) => {
         const text = panel.querySelector(".panel-text") as HTMLElement;
         const img = panel.querySelector(".panel-img") as HTMLElement;
 
-        // fade and slide-in effect for text
-        gsap.fromTo(
-          text,
-          { autoAlpha: 0, y: 40 },
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 75%",
+            once: true,
+          },
+        });
+
+        tl.fromTo(
+          img,
+          { scale: 1.15, opacity: 0 },
           {
-            autoAlpha: 1,
-            y: 0,
-            duration: 1,
+            scale: 1,
+            opacity: 1,
+            duration: 1.5,
             ease: "power2.out",
-            scrollTrigger: {
-              trigger: panel,
-              start: "top 75%",
-              once: true,
-            },
           }
+        ).fromTo(
+          text,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+          },
+          "-=0.8"
         );
 
-        // parallax image motion
+        // subtle parallax
         gsap.to(img, {
-          yPercent: 20,
+          yPercent: 15,
           ease: "none",
           scrollTrigger: {
             trigger: panel,
@@ -110,8 +124,16 @@ export default function KeyServicesView() {
   }, []);
 
   return (
-    <section id="key-services" className="relative bg-[#faf7f2]">
-      {/* Section Header */}
+    <section id="key-services" className="relative bg-[#faf7f2] overflow-hidden">
+      {/* Decorative transition divider */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        transition={{ duration: 1 }}
+        className="h-[2px] bg-[#9b7b16] w-3/4 mx-auto mt-20 origin-left"
+      />
+
+      {/* Header */}
       <div className="text-center py-24 px-6 bg-gradient-to-b from-[#faf7f2] to-[#f0e4d2]">
         <h2 className="text-4xl md:text-5xl font-semibold text-[#9b7b16] mb-4">
           Our Services
@@ -122,11 +144,11 @@ export default function KeyServicesView() {
         </p>
       </div>
 
-      {/* Service Panels */}
+      {/* Panels */}
       {services.map((s, i) => (
         <div
           key={s.title}
-          className="service-panel relative flex flex-col md:flex-row items-center justify-center min-h-[90vh] overflow-hidden"
+          className="service-panel relative flex flex-col md:flex-row items-center justify-center min-h-[75vh] md:min-h-[85vh] overflow-hidden"
         >
           {/* Background image */}
           <div className="absolute inset-0">
@@ -134,42 +156,50 @@ export default function KeyServicesView() {
               src={s.img}
               alt={s.title}
               fill
+              placeholder="blur"
               className="object-cover panel-img"
               loading={i < 2 ? "eager" : "lazy"}
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
           </div>
 
-          {/* Text Overlay */}
+          {/* Text overlay */}
           <div
-            className={`panel-text relative z-10 max-w-3xl mx-auto px-8 text-center text-white ${
+            className={`panel-text relative z-10 max-w-3xl mx-auto px-8 py-6 text-white rounded-2xl backdrop-blur-sm bg-black/30 shadow-lg ${
               i % 2 === 0
                 ? "md:text-left md:ml-[10%]"
                 : "md:text-right md:mr-[10%]"
             }`}
           >
-            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-[#f3d37a] drop-shadow-lg">
+            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-[#f3d37a] drop-shadow-[0_0_10px_rgba(155,123,22,0.5)]">
               {s.title}
             </h3>
-            <p className="text-lg md:text-xl leading-relaxed opacity-90">
+            <p className="text-lg md:text-xl leading-relaxed text-white/90">
               {s.desc}
             </p>
+
+            {/* Progress Indicator (optional aesthetic) */}
+            <div className="mt-6 text-sm text-white/70">
+              {i + 1} / {services.length}
+            </div>
           </div>
 
-          {/* Decorative gold gradient */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#9b7b16]/30 to-transparent" />
+          {/* Bottom decorative gradient */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#9b7b16]/30 to-transparent pointer-events-none" />
         </div>
       ))}
 
       {/* CTA */}
       <div className="text-center py-24 bg-gradient-to-t from-[#f0e4d2] to-[#faf7f2]">
-        <a
+        <motion.a
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
           href="#contact"
-          className="inline-flex items-center rounded-lg bg-[#9b7b16] px-8 py-4 text-white font-semibold shadow hover:bg-[#7e6412] transition-colors"
+          className="inline-flex items-center rounded-lg bg-[#9b7b16] px-8 py-4 text-white font-semibold shadow hover:bg-[#7e6412] transition-all"
         >
           Schedule a Consultation
-        </a>
+        </motion.a>
       </div>
     </section>
   );
