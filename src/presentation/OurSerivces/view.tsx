@@ -27,21 +27,21 @@ export default function OurServicesView() {
   return (
     <section
       id="our-services"
-      className="relative py-32 bg-gradient-to-b from-[#ffffff] via-[#faf5e6] to-[#e9dfc0] text-[#2b2413] overflow-hidden"
+      className="relative py-32 bg-gradient-to-b from-[#1a1a1a] via-[#181612] to-[#0f0e0c] text-white overflow-hidden"
     >
-      {/* Smooth transition from Licenses & Partners */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white via-[#fdf9ee]/80 to-transparent pointer-events-none" />
+      {/* Smooth top transition from Licenses & Partners */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white via-[#fefaf0]/60 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[#bfa14a] font-semibold mb-3 uppercase tracking-widest">
+          <p className="text-[#d6b352] font-semibold mb-3 uppercase tracking-widest">
             Our Expertise
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-[#826c23] mb-6 leading-tight drop-shadow-[0_0_8px_rgba(191,161,74,0.15)]">
+          <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-6 leading-tight drop-shadow-[0_0_12px_rgba(245,217,127,0.3)]">
             Comprehensive Legal Solutions
           </h2>
-          <p className="text-[#3b3218] text-lg leading-relaxed">
+          <p className="text-gray-300 text-lg leading-relaxed">
             Our firm provides integrated legal services that unite tradition,
             innovation, and precision — guiding businesses and individuals through
             complex legal landscapes with clarity and confidence.
@@ -56,27 +56,27 @@ export default function OurServicesView() {
               <motion.div
                 key={service.title}
                 whileHover={{
-                  scale: 1.03,
-                  boxShadow: "0 0 25px rgba(191,161,74,0.25)",
+                  scale: 1.04,
+                  boxShadow: "0 0 25px rgba(191,161,74,0.4)",
                 }}
                 transition={{ type: "spring", stiffness: 280, damping: 20 }}
                 className={`relative p-6 rounded-2xl bg-gradient-to-br ${
                   i % 2 === 0
-                    ? "from-[#ffffff]/95 to-[#f8f6ec]/95"
-                    : "from-[#fdfcf6]/90 to-[#f5edd7]/90"
-                } border border-[#e0d3a8]/60 group transition-all duration-300 hover:border-[#bfa14a]/60 hover:bg-[#fffef9]/90 backdrop-blur-sm`}
+                    ? "from-[#2a2720]/90 to-[#1c1a16]/90"
+                    : "from-[#22201b]/90 to-[#16140f]/90"
+                } border border-[#bfa14a]/20 group transition-all duration-300 hover:border-[#bfa14a]/50 hover:shadow-[0_0_20px_rgba(191,161,74,0.25)]`}
               >
                 {/* Icon */}
-                <div className="absolute -top-5 left-6 bg-[#bfa14a]/20 p-2 rounded-full group-hover:bg-[#bfa14a]/35 transition-colors duration-300 shadow-[0_0_10px_rgba(191,161,74,0.15)]">
-                  <Icon className="w-5 h-5 text-[#9b7b16]" strokeWidth={2.4} />
+                <div className="absolute -top-5 left-6 bg-[#bfa14a]/25 p-2 rounded-full group-hover:bg-[#bfa14a]/45 transition-colors duration-300 shadow-[0_0_10px_rgba(191,161,74,0.2)]">
+                  <Icon className="w-5 h-5 text-[#f5d97f]" strokeWidth={2.5} />
                 </div>
 
                 {/* Text */}
                 <div className="mt-4">
-                  <h3 className="font-semibold text-xl text-[#8c7425] mb-2 group-hover:text-[#bfa14a] transition-all duration-300">
+                  <h3 className="font-semibold text-xl text-[#f5d97f] mb-2 group-hover:text-[#ffe89b] transition-all duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-[#3b3218] text-sm leading-relaxed tracking-wide group-hover:text-[#2b2413] transition-colors duration-300">
+                  <p className="text-gray-300 text-sm leading-relaxed tracking-wide group-hover:text-gray-100 transition-colors duration-300">
                     {service.desc}
                   </p>
                 </div>
@@ -86,11 +86,11 @@ export default function OurServicesView() {
         </div>
       </div>
 
-      {/* Gentle highlight */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(191,161,74,0.08),transparent_75%)] pointer-events-none" />
+      {/* Subtle gold glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(191,161,74,0.08),transparent_80%)] pointer-events-none" />
 
-      {/* Bottom gradient for next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#e9dfc0]/80 via-transparent to-transparent pointer-events-none" />
+      {/* Bottom gradient */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0f0e0c] via-transparent to-transparent pointer-events-none" />
     </section>
   );
 }
