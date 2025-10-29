@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// ---- Service Images ----
 import imgCompanies from "@/assets/law-images/png/legal-entities.png";
 import imgFranchise from "@/assets/law-images/png/franchise.png";
 import imgContracts from "@/assets/law-images/png/legal-drafting.png";
@@ -69,6 +68,7 @@ export default function KeyServicesView() {
     },
   ];
 
+  // GSAP Scroll Animation Setup
   useEffect(() => {
     const ctx = gsap.context(() => {
       const panels = gsap.utils.toArray<HTMLElement>(".service-panel");
@@ -91,24 +91,23 @@ export default function KeyServicesView() {
           {
             scale: 1,
             opacity: 1,
-            duration: 1.5,
+            duration: 1.6,
             ease: "power2.out",
           }
         ).fromTo(
           text,
-          { y: 40, opacity: 0 },
+          { y: 50, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.9,
+            duration: 1,
             ease: "power3.out",
           },
-          "-=0.8"
+          "-=1"
         );
 
-        // subtle parallax
         gsap.to(img, {
-          yPercent: 15,
+          yPercent: 12,
           ease: "none",
           scrollTrigger: {
             trigger: panel,
@@ -124,79 +123,89 @@ export default function KeyServicesView() {
   }, []);
 
   return (
-    <section id="key-services" className="relative bg-[#faf7f2] overflow-hidden">
-      {/* Decorative transition divider */}
+    <section
+      id="key-services"
+      className="relative bg-[#0e0e0e] text-white overflow-hidden"
+    >
+      {/* Section divider for flow */}
       <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 1 }}
-        className="h-[2px] bg-[#9b7b16] w-3/4 mx-auto mt-20 origin-left"
+        className="h-[2px] bg-[#bfa14a] w-3/4 mx-auto mt-20 origin-left"
       />
 
       {/* Header */}
-      <div className="text-center py-24 px-6 bg-gradient-to-b from-[#faf7f2] to-[#f0e4d2]">
-        <h2 className="text-4xl md:text-5xl font-semibold text-[#9b7b16] mb-4">
+      <div className="text-center py-24 px-6 bg-gradient-to-b from-[#0e0e0e] via-[#1a1a1a] to-[#191716]">
+        <h2 className="text-4xl md:text-5xl font-semibold text-[#f5d97f] mb-4 tracking-tight drop-shadow-[0_0_12px_rgba(245,217,127,0.4)]">
           Our Services
         </h2>
-        <p className="max-w-2xl mx-auto text-gray-700 leading-relaxed">
-          Expert legal services that merge tradition with technology — guiding
-          clients through business, innovation, and justice.
+        <p className="max-w-2xl mx-auto text-gray-300 leading-relaxed text-lg">
+          Empowering businesses and individuals through precision-driven legal
+          expertise — from company formation to complex dispute resolution.
         </p>
       </div>
 
-      {/* Panels */}
+      {/* Service Panels */}
       {services.map((s, i) => (
         <div
           key={s.title}
-          className="service-panel relative flex flex-col md:flex-row items-center justify-center min-h-[75vh] md:min-h-[85vh] overflow-hidden"
+          className={`service-panel relative flex flex-col md:flex-row items-center justify-center min-h-[80vh] overflow-hidden -mt-[1px]`}
         >
-          {/* Background image */}
+          {/* Background Image */}
           <div className="absolute inset-0">
             <Image
               src={s.img}
               alt={s.title}
               fill
               placeholder="blur"
-              className="object-cover panel-img"
+              className="object-cover panel-img scale-105 brightness-[0.85]"
               loading={i < 2 ? "eager" : "lazy"}
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+            {/* Layered gradients for depth */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
           </div>
 
-          {/* Text overlay */}
+          {/* Text Block */}
           <div
-            className={`panel-text relative z-10 max-w-3xl mx-auto px-8 py-6 text-white rounded-2xl backdrop-blur-sm bg-black/30 shadow-lg ${
+            className={`panel-text relative z-10 max-w-3xl mx-auto px-8 py-8 md:py-10 rounded-3xl backdrop-blur-md bg-black/40 shadow-[0_0_40px_rgba(0,0,0,0.5)] ${
               i % 2 === 0
-                ? "md:text-left md:ml-[10%]"
-                : "md:text-right md:mr-[10%]"
+                ? "md:text-left md:ml-[8%]"
+                : "md:text-right md:mr-[8%]"
             }`}
           >
-            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-[#f3d37a] drop-shadow-[0_0_10px_rgba(155,123,22,0.5)]">
+            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-[#f5d97f] drop-shadow-[0_0_14px_rgba(245,217,127,0.5)] leading-snug">
               {s.title}
             </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/90">
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed">
               {s.desc}
             </p>
 
-            {/* Progress Indicator (optional aesthetic) */}
-            <div className="mt-6 text-sm text-white/70">
-              {i + 1} / {services.length}
-            </div>
+            {/* Subtle underline accent */}
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: "6rem" }}
+              transition={{ duration: 0.8 }}
+              className={`h-[3px] bg-[#bfa14a] mt-6 rounded-full ${
+                i % 2 === 0 ? "ml-0" : "ml-auto"
+              }`}
+            />
           </div>
 
-          {/* Bottom decorative gradient */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#9b7b16]/30 to-transparent pointer-events-none" />
+          {/* Bottom fade for seamless panel merging */}
+          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0e0e0e] via-transparent to-transparent pointer-events-none" />
         </div>
       ))}
 
-      {/* CTA */}
-      <div className="text-center py-24 bg-gradient-to-t from-[#f0e4d2] to-[#faf7f2]">
+      {/* Call-to-Action */}
+      <div className="text-center py-24 bg-gradient-to-t from-[#191716] via-[#1a1a1a] to-[#0e0e0e]">
         <motion.a
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
           href="#contact"
-          className="inline-flex items-center rounded-lg bg-[#9b7b16] px-8 py-4 text-white font-semibold shadow hover:bg-[#7e6412] transition-all"
+          className="inline-flex items-center rounded-xl bg-[#bfa14a] px-10 py-4 text-lg text-black font-semibold shadow-[0_0_25px_rgba(191,161,74,0.4)] hover:shadow-[0_0_30px_rgba(191,161,74,0.6)] hover:bg-[#d8ba62] transition-all"
         >
           Schedule a Consultation
         </motion.a>
