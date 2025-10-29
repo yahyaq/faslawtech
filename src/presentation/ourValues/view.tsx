@@ -27,19 +27,21 @@ const values = [
 export default function View() {
   const ref = useRef<HTMLDivElement | null>(null)
 
-  // subtle parallax
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const bgY = useTransform(scrollYProgress, [0, 1], ['-2%', '4%'])
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '5%'])
 
   return (
     <section
       id="ourValues"
       ref={ref}
-      className="relative isolate py-28 sm:py-32 px-6 sm:px-10 lg:px-20 overflow-hidden"
+      className="relative isolate py-28 sm:py-32 px-6 sm:px-10 lg:px-20 overflow-hidden bg-[#fffaf2]"
     >
-      {/* Background */}
+      {/* Fixed Background (shared with Licenses & Partners) */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
-        <motion.div style={{ y: bgY }} className="relative h-full w-full">
+        <motion.div
+          style={{ y: bgY }}
+          className="relative h-full w-full bg-fixed"
+        >
           <Image
             src={RiyadhSkyLines}
             alt="Riyadh skyline background"
@@ -47,23 +49,12 @@ export default function View() {
             priority
             sizes="100vw"
             className="object-cover object-center"
-            // Make the image pop a bit more
-            style={{ opacity: 0.72, filter: 'contrast(1.06) saturate(1.08)' }}
+            style={{ opacity: 0.75, filter: 'contrast(1.1) saturate(1.05)' }}
           />
         </motion.div>
 
-        {/* Very subtle gold vignette (reduced strength so skyline is visible) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(80% 60% at 50% 20%, rgba(155,123,22,0.06), transparent 60%)',
-          }}
-        />
-        {/* Lighter vertical fade so image shows through more */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#fffaf2]/55 via-[#fff7ea]/60 to-white/70" />
-        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-white/50 to-transparent" />
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white/55 to-transparent" />
+        {/* Subtle overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-[#f7f1d9]/70 to-[#e9e0b9]/60" />
       </div>
 
       {/* Header */}
@@ -101,26 +92,16 @@ export default function View() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.55, ease: 'easeOut' }}
             viewport={{ once: true, amount: 0.3 }}
-            className="relative rounded-3xl border border-[#e8dfc7]/70 bg-white/72 backdrop-blur-md p-8 sm:p-10
-                       shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15)]
-                       transition-all duration-300
-                       hover:bg-white/85 hover:border-[#c5a227]
-                       motion-reduce:transition-none"
+            className="relative rounded-3xl border border-[#e8dfc7]/70 bg-white/75 backdrop-blur-md p-8 sm:p-10
+                       shadow-[0_10px_25px_-10px_rgba(0,0,0,0.15)]
+                       hover:bg-white/90 hover:border-[#c5a227]
+                       transition-all duration-300"
           >
-            <motion.div
-              initial={{ scale: 0.85, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.15 + index * 0.1, duration: 0.45, ease: 'easeOut' }}
-              viewport={{ once: true }}
-              className="mx-auto mb-6 h-20 w-20 relative"
-            >
+            <div className="mx-auto mb-6 h-20 w-20 relative">
               <Image src={value.icon} alt={value.title} fill className="object-contain opacity-95" />
-            </motion.div>
-
+            </div>
             <h3 className="text-xl font-semibold text-[#9b7b16] mb-3">{value.title}</h3>
             <p className="text-gray-700 leading-relaxed">{value.description}</p>
-
-            <span className="pointer-events-none absolute left-8 right-8 bottom-6 h-px bg-gradient-to-r from-transparent via-[#e8dfc7] to-transparent" />
           </motion.article>
         ))}
       </div>
