@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+     xmlns="http://www.w3.org/2000/svg" aria-labelledby="title">
+  <title>Instagram</title>
+  <!-- outer rounded square -->
+  <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5"
+        stroke="currentColor" stroke-width="1.8"/>
+  <!-- lens -->
+  <circle cx="12" cy="12" r="4.2"
+          stroke="currentColor" stroke-width="1.8"/>
+  <!-- small viewfinder dot -->
+  <circle cx="16.8" cy="7.6" r="1.1" fill="currentColor"/>
+</svg>
