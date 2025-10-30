@@ -13,7 +13,7 @@ import IconTransparency from '@/assets/icons/value-transparency.png'
 import IconTrust from '@/assets/icons/value-trust.png'
 
 // Background
-import RiyadhSkyLines from '@/assets/pngs/RiyadhSkyLines.png'
+import RiyadhSkyLines from '@/assets/webp/RiyadhSkyLines.webp'
 
 const values = [
   { title: 'Privacy & Confidentiality', icon: IconPrivacy, description: 'We ensure the utmost confidentiality in all legal matters, safeguarding our clients’ information and trust.' },

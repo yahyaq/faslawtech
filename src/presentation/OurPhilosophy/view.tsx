@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import KAFD1 from '@/assets/pngs/KAFD1.png'
+import KAFD1 from '@/assets/webp/KAFD1.webp'
 
 const cards = [
   {

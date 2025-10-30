@@ -1,168 +1,212 @@
-// // components/views/KeyServicesView.tsx
 // "use client";
 
 // import { motion } from "framer-motion";
-// import { FaBuilding, FaHandshake, FaLightbulb, FaFileContract, FaGavel, FaComments, FaHome, FaMoneyBillWave } from "react-icons/fa";
+// import Image from "next/image";
 
-// type Service = {
-//   icon: React.ReactNode;
-//   title: string;
-//   description: string[];
-//   link?: string;
-// };
+// import ministryOfJustice from "@/assets/logos/ministry-of-justice.png";
+// import monshaat from "@/assets/logos/monshaat.png";
+// import saip from "@/assets/logos/SAIP.svg";
+// import sba from "@/assets/logos/SBA.svg";
+// import bog from "@/assets/logos/BOG-colored.png";
+// import franchiseCenter from "@/assets/logos/Franchise-Center.svg";
+// import ministryOfCommerce from "@/assets/logos/ministry-of-commerce.svg";
+// import ministryOfInvestment from "@/assets/logos/Ministry-of-Investment.svg";
+// import humanResource from "@/assets/logos/human-resource.svg";
 
-// const services: Service[] = [
-//   {
-//     icon: <FaBuilding className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Companies & Business Sector",
-//     description: [
-//       "Company setup (national/foreign/mixed) to legal registration.",
-//       "Intellectual property registration (trade names, trademarks, patents).",
-//       "Governance, mergers & acquisitions support.",
-//       "Bankruptcy & liquidation procedures.",
-//       "Legal consultancy, representation & compliance services.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaHandshake className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Commercial Franchise",
-//     description: [
-//       "Draft franchise agreements aligned with Franchise Law & regs.",
-//       "Register franchise documentation at the Commercial Franchise Centre.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaLightbulb className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Intellectual Property Rights",
-//     description: [
-//       "Patent & copyright registration.",
-//       "Trademark registration.",
-//       "Trademark objections & dispute resolution.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaFileContract className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Contracts & Agreements",
-//     description: [
-//       "Draft/review MOUs, commercial & employment contracts.",
-//       "Draft/adapt regulations for private & public entities.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaGavel className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Litigation & Dispute Settlement",
-//     description: [
-//       "Alternative dispute resolution (mediation, arbitration, negotiation).",
-//       "Representation before general & admin courts at all levels.",
-//       "Representation before quasi-judicial committees.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaComments className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Legal Consultations",
-//     description: [
-//       "Legal opinions & consultations across varied fields to safeguard clients’ rights.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaHome className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Wills, Endowments & Real-Estate Settlement",
-//     description: [
-//       "Wills & endowments executed under Islamic law compliance.",
-//       "Real-estate settlement, inheritance & asset division in legitimate manner.",
-//     ],
-//     link: "#",
-//   },
-//   {
-//     icon: <FaMoneyBillWave className="text-[#9b7b16] w-8 h-8" />,
-//     title: "Debt Collection & Execution",
-//     description: [
-//       "Financial claims filed in preliminary courts.",
-//       "Execute court/arbitrator decisions & commercial documents (checks, promissory notes).",
-//       "Execute notary-issued financial debt declarations.",
-//     ],
-//     link: "#",
-//   },
-// ];
+// export default function View() {
+//   const colors = {
+//     gold: {
+//       50: "#FBF7E8",
+//       100: "#F6EBC4",
+//       200: "#F0DD9B",
+//       300: "#EACD6F",
+//       400: "#DFB93F",
+//       500: "#C8A128",
+//       600: "#AA8822",
+//       700: "#8E6E1C",
+//       800: "#5C4913",
+//       900: "#32270A",
+//     },
+//     stone: {
+//       50: "#FAF9F7",
+//       100: "#F3F1ED",
+//       200: "#E5E1DA",
+//       300: "#D4CEC5",
+//       400: "#BFB8AE",
+//       500: "#A49C90",
+//       600: "#8B8378",
+//       700: "#6F685E",
+//       800: "#4C4741",
+//       900: "#2E2A26",
+//     },
+//   } as const;
 
-// export default function KeyServicesView() {
+//   const logos = [
+//     { src: ministryOfJustice, alt: "Ministry of Justice" },
+//     { src: monshaat, alt: "Monsha'at" },
+//     { src: saip, alt: "Saudi Authority for Intellectual Property" },
+//     { src: sba, alt: "Saudi Bar Association" },
+//     { src: bog, alt: "Board of Grievances" },
+//     { src: franchiseCenter, alt: "Franchise Center" },
+//     { src: ministryOfCommerce, alt: "Ministry of Commerce" },
+//     { src: ministryOfInvestment, alt: "Ministry of Investment" },
+//     { src: humanResource, alt: "Human Resources Development Fund" },
+//   ];
+
+//   const logosLoop = [...logos, ...logos];
+
 //   return (
 //     <section
-//       id="key-services"
-//       className="relative bg-gradient-to-b from-[#faf7f2] to-[#f0e4d2] py-20 overflow-hidden"
+//       id="licenses-partners"
+//       style={{
+//         position: "relative",
+//         padding: "7rem 0",
+//         background: `linear-gradient(to bottom, ${colors.stone[50]}, white 40%, ${colors.gold[50]})`,
+//         overflow: "hidden",
+//       }}
 //     >
-//       {/* Background texture */}
-//       <div className="absolute inset-0 bg-[url('/textures/abstract-gold.webp')] bg-cover bg-center opacity-10 pointer-events-none" aria-hidden="true" />
+//       <div
+//         style={{
+//           maxWidth: "1280px",
+//           margin: "0 auto",
+//           padding: "0 2rem",
+//           textAlign: "center",
+//           position: "relative",
+//           zIndex: 2,
+//         }}
+//       >
+//         {/* Section Header */}
+//         <motion.p
+//           initial={{ opacity: 0, y: 20 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.6 }}
+//           style={{
+//             color: colors.gold[700],
+//             fontWeight: 600,
+//             textTransform: "uppercase",
+//             letterSpacing: "0.15em",
+//             marginBottom: "0.5rem",
+//             fontFamily: "'Inter', sans-serif",
+//           }}
+//         >
+//           Licenses & Partners
+//         </motion.p>
 
-//       <div className="relative container mx-auto px-6 md:px-12 lg:px-20">
 //         <motion.h2
 //           initial={{ opacity: 0, y: 20 }}
 //           whileInView={{ opacity: 1, y: 0 }}
 //           transition={{ duration: 0.8 }}
-//           viewport={{ once: true }}
-//           className="text-4xl md:text-5xl font-semibold text-center text-[#9b7b16] mb-8"
+//           style={{
+//             fontFamily: "'Playfair Display', serif",
+//             fontSize: "2.25rem",
+//             color: colors.stone[900],
+//             fontWeight: 700,
+//             marginBottom: "3.5rem",
+//           }}
 //         >
-//           Our Key Services
+//           Proudly Accredited & Partnered With
 //         </motion.h2>
 
-//         <motion.p
-//           initial={{ opacity: 0, y: 20 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 0.2, duration: 0.8 }}
-//           viewport={{ once: true }}
-//           className="max-w-3xl mx-auto text-center text-gray-700 mb-12 leading-relaxed"
+//         {/* Logos Carousel */}
+//         <div
+//           style={{
+//             position: "relative",
+//             overflow: "hidden",
+//             borderRadius: "1.75rem",
+//             padding: "2rem 0",
+//             background: "rgba(255,255,255,0.6)",
+//             boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+//             backdropFilter: "blur(6px)",
+//             transition: "background 0.4s ease",
+//           }}
 //         >
-//           We provide comprehensive legal services designed to support businesses, investors, and individuals. Explore how we can assist you across our specialised practice areas.
-//         </motion.p>
-
-//         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-//           {services.map((service, index) => (
-//             <motion.div
-//               key={service.title}
-//               initial={{ opacity: 0, y: 30 }}
-//               whileInView={{ opacity: 1, y: 0 }}
-//               transition={{ delay: index * 0.1, duration: 0.7 }}
-//               viewport={{ once: true }}
-//               className="bg-white/80 backdrop-blur-md rounded-2xl shadow-md p-8 border border-[#e8d9b9] hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
-//             >
-//               <div className="flex items-center mb-4">
-//                 {service.icon}
-//                 <h3 className="ml-3 text-2xl font-semibold text-[#9b7b16]">{service.title}</h3>
-//               </div>
-//               <ul className="list-disc list-inside text-gray-700 space-y-2 text-sm leading-relaxed">
-//                 {service.description.map((item, i) => (
-//                   <li key={i}>{item}</li>
-//                 ))}
-//               </ul>
-//               {service.link && (
-//                 <div className="mt-4">
-//                   <a
-//                     href={service.link}
-//                     className="inline-block text-[#9b7b16] font-medium underline hover:no-underline"
-//                   >
-//                     Learn more →
-//                   </a>
-//                 </div>
-//               )}
-//             </motion.div>
-//           ))}
-//         </div>
-
-//         <div className="text-center mt-12">
-//           <a
-//             href="#contact"
-//             className="inline-block bg-[#9b7b16] text-white font-semibold py-3 px-8 rounded-lg hover:bg-[#7e6412] transition-colors duration-200"
+//           <motion.div
+//             style={{
+//               display: "flex",
+//               alignItems: "center",
+//               gap: "4rem",
+//               width: "max-content",
+//             }}
+//             animate={{ x: ["0%", "-50%"] }}
+//             transition={{
+//               repeat: Infinity,
+//               repeatType: "loop",
+//               duration: 30,
+//               ease: "linear",
+//             }}
 //           >
-//             Schedule a Free Consultation
-//           </a>
+//             {logosLoop.map((logo, i) => (
+//               <motion.div
+//                 key={i}
+//                 style={{
+//                   flexShrink: 0,
+//                   opacity: 0.9,
+//                   transition: "opacity 0.3s ease",
+//                 }}
+//                 whileHover={{ scale: 1.05, opacity: 1 }}
+//               >
+//                 <div
+//                   style={{
+//                     position: "relative",
+//                     width: "9rem",
+//                     height: "5rem",
+//                     display: "flex",
+//                     alignItems: "center",
+//                     justifyContent: "center",
+//                   }}
+//                 >
+//                   <Image
+//                     src={logo.src}
+//                     alt={logo.alt}
+//                     fill
+//                     className="adaptive-logo"
+//                     style={{
+//                       objectFit: "contain",
+//                       transition:
+//                         "filter 0.4s ease, transform 0.3s ease, opacity 0.3s ease",
+//                     }}
+//                   />
+//                 </div>
+//               </motion.div>
+//             ))}
+//           </motion.div>
 //         </div>
 //       </div>
+
+//       {/* Dynamic Filter Styles */}
+//       <style jsx>{`
+//         /* Default: dark logos for white backgrounds */
+//         .adaptive-logo {
+//           filter: invert(1) brightness(0) grayscale(1)
+//             contrast(1.05) saturate(1.05);
+//         }
+
+//         /* When in dark mode → white logos */
+//         @media (prefers-color-scheme: dark) {
+//           .adaptive-logo {
+//             filter: invert(0) brightness(1000%) contrast(1.1);
+//           }
+
+//           section#licenses-partners {
+//             background: linear-gradient(
+//               to bottom,
+//               ${colors.stone[900]},
+//               ${colors.stone[800]} 40%,
+//               ${colors.gold[800]}
+//             );
+//           }
+
+//           section#licenses-partners h2 {
+//             color: ${colors.stone[50]};
+//           }
+//         }
+
+//         /* Hover glow */
+//         .adaptive-logo:hover {
+//           filter: brightness(1.05)
+//             drop-shadow(0 0 12px rgba(200, 161, 40, 0.3));
+//         }
+//       `}</style>
 //     </section>
 //   );
 // }
