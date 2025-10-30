@@ -15,15 +15,70 @@ Main colors
 
 Seconday colors
 
-| Shade   | Hex       | Usage Suggestion                            |
-| :------ | :-------- | :------------------------------------------ |
-| **50**  | `#F4F6FA` | Very light background                       |
-| **100** | `#E1E7F1` | Light background / section divider          |
-| **200** | `#C9D4E4` | Card background                             |
-| **300** | `#A9BBD4` | Hover / borders                             |
-| **400** | `#7C97BD` | Buttons / icons                             |
-| **500** | `#4C6FA3` | **Main secondary color (Royal Slate Blue)** |
-| **600** | `#3E5E8A` | Active links / hover states                 |
-| **700** | `#2F4B6F` | Headings or contrast text on light gold     |
-| **800** | `#1E324D` | Deep accents / footers with gold text       |
-| **900** | `#111C2E` | Rich dark blue-black background             |
+| Shade   | Hex       | Description                        | Suggested Use                       |
+| :------ | :-------- | :--------------------------------- | :---------------------------------- |
+| **50**  | `#FAF9F7` | Almost-white with a hint of warmth | Page background / lightest sections |
+| **100** | `#F3F1ED` | Gentle ivory-greige                | Section backgrounds                 |
+| **200** | `#E5E1DA` | Pale warm stone                    | Cards / dividers                    |
+| **300** | `#D4CEC5` | Balanced greige                    | Subtle hover / secondary buttons    |
+| **400** | `#BFB8AE` | Refined stone tone                 | Borders / inactive elements         |
+| **500** | `#A49C90` | **Core neutral** — soft greige     | Body text / icons / interface base  |
+| **600** | `#8B8378` | Mid-tone stone                     | Hover states / subtle depth         |
+| **700** | `#6F685E` | Deep greige                        | Headings / contrast text            |
+| **800** | `#4C4741` | Charcoal-stone                     | Footer background / dark sections   |
+| **900** | `#2E2A26` | Rich espresso-stone                | Maximum contrast areas              |
+
+Hero & Banner Gradients
+
+| Name               | Gradient                                                         | Description / Usage                                                                             |
+| :----------------- | :--------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
+| **Gold Radiance**  | `linear-gradient(135deg, #EACD6F 0%, #C8A128 50%, #8E6E1C 100%)` | Primary hero or key call-to-action sections — bright, confident, authoritative.                 |
+| **Stone Prestige** | `linear-gradient(135deg, #E5E1DA 0%, #BFB8AE 60%, #8B8378 100%)` | Hero variant for secondary or neutral pages — elegant and subtle.                               |
+| **Heritage Fade**  | `linear-gradient(135deg, #C8A128 0%, #A49C90 50%, #2E2A26 100%)` | Transitional hero between legal tradition and tech modernity — use sparingly for visual impact. |
+
+Section Transition Gradients
+
+| Name              | Gradient                                                            | Description / Usage                                                                                          |
+| :---------------- | :------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------- |
+| **Gold to Stone** | `linear-gradient(to bottom, #C8A128 0%, #E5E1DA 100%)`              | Smooth downward fade from gold section to light greige — perfect for “Our Values” or “Partners” transitions. |
+| **Stone to Gold** | `linear-gradient(to bottom, #F3F1ED 0%, #C8A128 100%)`              | Reverses the direction — use when reintroducing gold prominence.                                             |
+| **Soft Divide**   | `linear-gradient(to bottom, #F3F1ED 0%, #FAF9F7 50%, #F6EBC4 100%)` | Gentle divider or interstitial background between sections for a polished layout rhythm.                     |
+
+Overlay & Accent Gradients
+
+| Name                 | Gradient                                                                        | Description / Usage                                                                 |
+| :------------------- | :------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------- |
+| **Gold Overlay**     | `linear-gradient(180deg, rgba(200,161,40,0.75) 0%, rgba(200,161,40,0.05) 100%)` | Semi-transparent overlay on hero images or video banners for consistent brand tone. |
+| **Stone Veil**       | `linear-gradient(180deg, rgba(139,131,120,0.8) 0%, rgba(250,249,247,0.1) 100%)` | Soft neutral overlay for text legibility over light backgrounds.                    |
+| **Dual Accent Glow** | `linear-gradient(90deg, #DFB93F 0%, #A49C90 50%, #4C4741 100%)`                 | Animated hover gradient or button border background for high-end visual polish.     |
+
+Font Pairing
+
+| Type                   | Font                           | Role                           | Feel                           |
+| :--------------------- | :----------------------------- | :----------------------------- | :----------------------------- |
+| **Primary Serif**      | `Playfair Display` (or `Lora`) | Headings, quotes, hero titles  | Sophisticated, legal, high-end |
+| **Primary Sans-serif** | `Inter` (or `Manrope`)         | Body, nav, buttons, small text | Clean, legible, modern-tech    |
+| **Optional Accent**    | `DM Sans`                      | Taglines / section labels      | Friendly yet minimal           |
+
+Font Hierarchy & Scale
+
+| Token     | Size              | Weight | Line Height | Usage                                |
+| :-------- | :---------------- | :----- | :---------- | :----------------------------------- |
+| `h1`      | `4.5rem` (72px)   | 700    | 1.1         | Hero title / main section headline   |
+| `h2`      | `3rem` (48px)     | 700    | 1.15        | Major section titles                 |
+| `h3`      | `2rem` (32px)     | 600    | 1.2         | Subheadings / feature cards          |
+| `h4`      | `1.5rem` (24px)   | 600    | 1.3         | Section intros / quote headers       |
+| `body-lg` | `1.125rem` (18px) | 400    | 1.7         | General body text, wide columns      |
+| `body`    | `1rem` (16px)     | 400    | 1.7         | Standard paragraphs                  |
+| `body-sm` | `0.875rem` (14px) | 400    | 1.6         | Metadata, captions                   |
+| `button`  | `0.875rem` (14px) | 600    | 1.2         | Buttons / links (uppercase optional) |
+
+Color Mapping for Typography
+
+| Type                         | Color                       | Notes                                               |
+| :--------------------------- | :-------------------------- | :-------------------------------------------------- |
+| Headings                     | `stone-900` / `stone-800`   | High contrast on light gold or greige backgrounds   |
+| Subheadings                  | `gold-700`                  | Adds warmth and hierarchy                           |
+| Body text                    | `stone-700` / `stone-600`   | Gentle contrast for comfortable reading             |
+| Links                        | `gold-600` hover:`gold-400` | Brand consistency with motion                       |
+| Inverse text (dark sections) | `stone-50`                  | Clean readability on deep gold or stone backgrounds |

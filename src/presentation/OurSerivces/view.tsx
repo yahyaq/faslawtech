@@ -13,6 +13,33 @@ import {
 } from "lucide-react";
 
 export default function OurExpertiseView() {
+  const colors = {
+    gold: {
+      50: "#FBF7E8",
+      100: "#F6EBC4",
+      200: "#F0DD9B",
+      300: "#EACD6F",
+      400: "#DFB93F",
+      500: "#C8A128",
+      600: "#AA8822",
+      700: "#8E6E1C",
+      800: "#5C4913",
+      900: "#32270A",
+    },
+    stone: {
+      50: "#FAF9F7",
+      100: "#F3F1ED",
+      200: "#E5E1DA",
+      300: "#D4CEC5",
+      400: "#BFB8AE",
+      500: "#A49C90",
+      600: "#8B8378",
+      700: "#6F685E",
+      800: "#4C4741",
+      900: "#2E2A26",
+    },
+  };
+
   const services = [
     {
       title: "Companies & Business Sector",
@@ -59,64 +86,162 @@ export default function OurExpertiseView() {
   return (
     <section
       id="our-expertise"
-      className="relative py-32 bg-gradient-to-b from-golden-50 via-golden-100 to-golden-200 overflow-hidden"
+      style={{
+        position: "relative",
+        padding: "8rem 0",
+        background: `linear-gradient(to bottom, ${colors.gold[50]}, ${colors.gold[100]}, ${colors.gold[200]})`,
+        overflow: "hidden",
+      }}
     >
-      {/* Decorative blue-gold blend glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(76,111,163,0.08),transparent_70%)] pointer-events-none" />
+      {/* Subtle warm-greige glow */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "radial-gradient(ellipse at center, rgba(164,156,144,0.08), transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        {/* Header Section */}
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "0 2rem",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center max-w-2xl mx-auto mb-20"
+          style={{
+            textAlign: "center",
+            maxWidth: "680px",
+            margin: "0 auto 5rem auto",
+          }}
         >
-          <p className="text-golden-600 font-semibold uppercase tracking-[0.2em] mb-3">
+          <p
+            style={{
+              color: colors.gold[600],
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              marginBottom: "0.75rem",
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
             Our Expertise
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-golden-700 leading-tight mb-6 drop-shadow-[0_1px_10px_rgba(200,161,40,0.25)]">
+          <h2
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "3rem",
+              lineHeight: 1.2,
+              color: colors.gold[700],
+              fontWeight: 700,
+              marginBottom: "1.5rem",
+              textShadow: "0 1px 10px rgba(200,161,40,0.25)",
+            }}
+          >
             Comprehensive Legal Solutions
           </h2>
-          <p className="text-slate-700 text-lg leading-relaxed">
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "1.125rem",
+              lineHeight: 1.7,
+              color: colors.stone[700],
+            }}
+          >
             We offer end-to-end legal expertise across sectors — blending
             precision, innovation, and deep legal understanding to help our
             clients achieve their goals confidently.
           </p>
         </motion.div>
 
-        {/* Expertise Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {/* Grid */}
+        <div
+          style={{
+            display: "grid",
+            gap: "2.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          }}
+        >
           {services.map((service, index) => {
             const Icon = service.icon;
+            const fromColor =
+              index % 2 === 0
+                ? colors.stone[50]
+                : colors.gold[50];
+            const toColor =
+              index % 2 === 0
+                ? colors.stone[100]
+                : colors.gold[100];
+
             return (
               <motion.div
                 key={service.title}
                 whileHover={{
                   scale: 1.03,
-                  boxShadow: "0 6px 30px rgba(200,161,40,0.25)",
+                  boxShadow: "0 8px 30px rgba(200,161,40,0.25)",
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 18 }}
-                className={`relative p-8 rounded-2xl backdrop-blur-sm bg-gradient-to-br ${
-                  index % 2 === 0
-                    ? "from-golden-50/95 to-golden-100/90"
-                    : "from-slate-50/95 to-slate-100/90"
-                } border border-golden-200/60 hover:border-golden-400 transition-all duration-300`}
+                style={{
+                  position: "relative",
+                  padding: "2rem",
+                  borderRadius: "1.25rem",
+                  background: `linear-gradient(to bottom right, ${fromColor} 95%, ${toColor} 100%)`,
+                  border: `1px solid ${colors.gold[200]}`,
+                  transition: "all 0.3s ease",
+                  backdropFilter: "blur(5px)",
+                }}
               >
                 {/* Icon */}
-                <div className="absolute -top-6 left-6 bg-golden-200/50 p-3 rounded-full shadow-[0_0_12px_rgba(200,161,40,0.2)] group-hover:bg-golden-400/60 transition-all duration-300">
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-1.5rem",
+                    left: "1.5rem",
+                    background: `${colors.gold[200]}90`,
+                    padding: "0.75rem",
+                    borderRadius: "50%",
+                    boxShadow: "0 0 12px rgba(200,161,40,0.25)",
+                  }}
+                >
                   <Icon
-                    className="w-6 h-6 text-golden-700"
+                    size={24}
                     strokeWidth={2.5}
+                    style={{ color: colors.gold[700] }}
                   />
                 </div>
 
                 {/* Text */}
-                <div className="mt-2">
-                  <h3 className="text-xl font-semibold text-golden-700 mb-2 group-hover:text-golden-600 transition-all duration-300">
+                <div style={{ marginTop: "1rem" }}>
+                  <h3
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "1.25rem",
+                      fontWeight: 600,
+                      color: colors.gold[700],
+                      marginBottom: "0.5rem",
+                      transition: "color 0.3s ease",
+                    }}
+                  >
                     {service.title}
                   </h3>
-                  <p className="text-slate-700 text-sm leading-relaxed tracking-wide group-hover:text-slate-900 transition-colors duration-300">
+                  <p
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "0.95rem",
+                      lineHeight: 1.6,
+                      color: colors.stone[700],
+                      letterSpacing: "0.015em",
+                    }}
+                  >
                     {service.desc}
                   </p>
                 </div>
@@ -126,8 +251,18 @@ export default function OurExpertiseView() {
         </div>
       </div>
 
-      {/* Bottom transition gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-golden-200 via-transparent to-transparent pointer-events-none" />
+      {/* Bottom Gradient Fade */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "6rem",
+          background: `linear-gradient(to top, ${colors.gold[200]}, transparent)`,
+          pointerEvents: "none",
+        }}
+      />
     </section>
   );
 }
