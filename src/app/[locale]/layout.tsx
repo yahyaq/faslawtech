@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import routing from "@/i18n/routing";
+// import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 // === Fonts ===
 const geistSans = Geist({
@@ -50,7 +50,7 @@ export default async function LocaleLayout({
       >
         {/* ✅ Global Intl Provider + Smooth Scroll */}
         <NextIntlClientProvider locale={locale}>
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

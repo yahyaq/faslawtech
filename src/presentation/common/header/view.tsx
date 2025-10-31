@@ -5,17 +5,16 @@ import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Logo from '@/assets/pngs/logo-sm.png';
-import { useTranslations, useLocale } from 'next-intl'; // ✅ get t() and locale
-import { useRouter, usePathname } from '@/i18n/navigation'; // ✅ uses your routing setup
+import { useTranslations, useLocale } from 'next-intl';
+import { useRouter, usePathname } from '@/i18n/navigation';
 
 export default function HeaderView() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations('header');
-  const locale = useLocale(); // ✅ the active locale (en or ar)
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  // ✅ Navigation links from translations
   const navigation = [
     { name: t('nav.about'), href: '#aboutUs' },
     { name: t('nav.purpose'), href: '#guidedByPurpose' },
@@ -31,7 +30,6 @@ export default function HeaderView() {
     },
   };
 
-  // ✅ Locale Switcher
   const handleLanguageToggle = () => {
     const newLocale = locale === 'en' ? 'ar' : 'en';
     router.replace(pathname, { locale: newLocale });
@@ -39,32 +37,31 @@ export default function HeaderView() {
 
   return (
     <header
-      className="relative w-full z-50 bg-white/70 backdrop-blur-md shadow-sm"
-      style={{ fontFamily: "'Inter', sans-serif" }}
+      className="relative w-full z-50 shadow-sm backdrop-blur-md"
+      style={{
+        fontFamily: "'Inter', sans-serif",
+        backgroundColor: 'rgba(255, 255, 255, 0.85)',
+        WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(12px)',
+      }}
     >
+      {/* ✅ Solid fallback layer behind blur to prevent gray tint */}
+      <div className="absolute inset-0 bg-white sm:bg-white/80 -z-10" />
+
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-12"
+        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-12 relative z-10"
       >
         {/* === Logo Section === */}
         <a href="#hero" className="flex items-center gap-3">
           <Image
             src={Logo}
-            alt={t('logoAlt')} // ✅ translated logo alt text
+            alt={t('logoAlt')}
             width={48}
             height={48}
             className="object-contain"
             priority
           />
-          {/* <span
-            className="text-lg font-bold tracking-wide"
-            style={{
-              color: colors.gold[700],
-              fontFamily: "'Playfair Display', serif",
-            }}
-          >
-            {t('brandName')} 
-          </span> */}
         </a>
 
         {/* === Mobile Menu Button === */}
@@ -100,7 +97,6 @@ export default function HeaderView() {
               color: colors.gold[700],
             }}
           >
-            {/* ✅ Dynamic translation for button text */}
             {locale === 'en'
               ? t('languageToggle.arabic')
               : t('languageToggle.english')}
@@ -126,15 +122,6 @@ export default function HeaderView() {
                 height={48}
                 className="object-contain"
               />
-              {/* <span
-                className="text-lg font-bold"
-                style={{
-                  color: colors.gold[700],
-                  fontFamily: "'Playfair Display', serif",
-                }}
-              >
-                {t('brandName')}
-              </span> */}
             </a>
             <button
               type="button"
@@ -145,7 +132,6 @@ export default function HeaderView() {
             </button>
           </div>
 
-          {/* Navigation Links */}
           <div className="mt-8 space-y-4">
             {navigation.map((item) => (
               <a
@@ -160,7 +146,6 @@ export default function HeaderView() {
             ))}
           </div>
 
-          {/* Language Toggle (Mobile) */}
           <div className="mt-8 border-t border-gray-200 pt-4">
             <button
               onClick={handleLanguageToggle}
