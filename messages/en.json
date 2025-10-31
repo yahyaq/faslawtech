@@ -12,5 +12,23 @@
     },
     "brandName": "FAS Law Tech",
     "logoAlt": "Faisal Abdullah AlShehri Law Firm Logo"
+  },
+
+  "hero": {
+    "altText": "King Abdullah Financial District, Riyadh",
+    "logoAlt": "Faisal Abdullah AlShehri Law Firm Logo",
+    "slogan": "Upholding Justice, Protecting Interests, Enabling Success",
+    "cta": {
+      "whatsapp": "Request a Legal Consultation",
+      "download": "Download Our Profile"
+    }
+  },
+
+
+  "aboutUs": {
+    "heading": "Who We Are",
+    "paragraph1": "Our Law firm <firmName>Faisal Abdullah Al-Shahri</firmName> is a professional company that consists of a distinguished number of experienced and competent lawyers who are experts in various legal disciplines to serve our clients throughout the Kingdom of Saudi Arabia.",
+    "paragraph2": "Our legal services are based on the upholding of <highlightJustice>justice</highlightJustice> and the execution of legal tasks entrusted to us from our clients, ensuring professional legal practices that help them achieve their goals, protect their interests, and prosper sustainably.",
+    "imageAlt": "Symbolic illustration representing justice and professionalism"
   }
 }

@@ -1,16 +1,15 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-
-// Brand assets
-import LogoGold from '@/assets/pngs/logo.png'
-import IconWhatsApp from '@/assets/icons/whatsapp.svg'
-import Skyline from '@/assets/pngs/SkylineHorizontal.png'
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useTranslations, useLocale } from 'next-intl';
+import IconWhatsApp from '@/assets/icons/whatsapp.svg';
+import LogoGold from '@/assets/pngs/logo.png';
+import Skyline from '@/assets/pngs/SkylineHorizontal.png';
 
 export default function HeroView() {
-  const [language, setLanguage] = useState<'EN' | 'AR'>('EN')
+  const t = useTranslations('hero');
+  const locale = useLocale();
 
   const colors = {
     gold: {
@@ -23,27 +22,27 @@ export default function HeroView() {
       600: '#AA8822',
       700: '#8E6E1C',
       800: '#5C4913',
-      900: '#32270A',
+      900: '#32270A'
     },
     blend: {
       top: 'rgba(250,247,232,0)',
       mid: 'rgba(250,247,232,0.9)',
-      bottom: '#fffaf2',
-    },
-  }
+      bottom: '#fffaf2'
+    }
+  };
 
-  // ✅ Handle download by language (from /public folder)
+  // ✅ Choose profile file by locale
   const handleDownload = () => {
     const file =
-      language === 'EN'
+      locale === 'en'
         ? '/profile/Faslawfirm-Profile-EN.pdf'
-        : '/profile/Faslawfirm-Profile-AR.pdf'
+        : '/profile/Faslawfirm-Profile-AR.pdf';
 
-    const link = document.createElement('a')
-    link.href = file
-    link.download = file.split('/').pop() || 'FAS-Law-Firm-Profile.pdf'
-    link.click()
-  }
+    const link = document.createElement('a');
+    link.href = file;
+    link.download = file.split('/').pop() || 'FAS-Law-Firm-Profile.pdf';
+    link.click();
+  };
 
   return (
     <section
@@ -54,7 +53,7 @@ export default function HeroView() {
       {/* Background */}
       <Image
         src={Skyline}
-        alt="King Abdullah Financial District, Riyadh"
+        alt={t('altText')}
         fill
         priority
         className="object-cover object-center will-change-transform"
@@ -64,7 +63,7 @@ export default function HeroView() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: `linear-gradient(to right, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`,
+          background: `linear-gradient(to right, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`
         }}
       />
 
@@ -78,7 +77,7 @@ export default function HeroView() {
         {/* Logo */}
         <Image
           src={LogoGold}
-          alt="Faisal Abdullah AlShehri Law Firm Logo"
+          alt={t('logoAlt')}
           width={460}
           height={160}
           priority
@@ -93,10 +92,10 @@ export default function HeroView() {
             fontSize: '1.55rem',
             color: colors.gold[800],
             lineHeight: 1.6,
-            textShadow: '0 2px 10px rgba(255,255,255,0.75)',
+            textShadow: '0 2px 10px rgba(255,255,255,0.75)'
           }}
         >
-          Upholding Justice, Protecting Interests, Enabling Success
+          {t('slogan')}
         </p>
 
         {/* WhatsApp CTA */}
@@ -110,7 +109,7 @@ export default function HeroView() {
           style={{
             background: `linear-gradient(90deg, ${colors.gold[500]}, ${colors.gold[400]})`,
             boxShadow: '0 0 25px rgba(200,161,40,0.4)',
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Inter', sans-serif"
           }}
         >
           <Image
@@ -120,12 +119,10 @@ export default function HeroView() {
             height={22}
             style={{ filter: 'invert(1)', opacity: 0.9 }}
           />
-          {language === 'EN'
-            ? 'Request a Legal Consultation'
-            : 'طلب استشارة قانونية'}
+          {t('cta.whatsapp')}
         </motion.a>
 
-        {/* ✅ Download Profile Button */}
+        {/* Download Profile Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -135,14 +132,12 @@ export default function HeroView() {
             borderColor: colors.gold[600],
             color: colors.gold[700],
             fontFamily: "'Inter', sans-serif",
-            backgroundColor: 'rgba(255,255,255,0.6)',
+            backgroundColor: 'rgba(255,255,255,0.6)'
           }}
         >
-          {language === 'EN'
-            ? 'Download Our Profile'
-            : 'تحميل ملف التعريف الخاص بنا'}
+          {t('cta.download')}
         </motion.button>
       </motion.div>
     </section>
-  )
+  );
 }
