@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
+import { useEffect, useState } from 'react';
 import KAFD1 from '@/assets/webp/KAFD1.webp';
 
 export default function OurPhilosophyView() {
@@ -10,8 +11,18 @@ export default function OurPhilosophyView() {
   const locale = useLocale();
   const isArabic = locale === 'ar';
 
+  // ✅ Detect mobile devices once on mount
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsMobile(window.innerWidth < 768);
+    }
+  }, []);
+
+  // ✅ Load cards dynamically from translations
   const cards = t.raw('cards') as { title: string; content: string }[];
 
+  // ✅ Motion variants
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
@@ -21,36 +32,59 @@ export default function OurPhilosophyView() {
     <section
       id="ourPhilosophy"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className={`relative min-h-screen py-24 sm:py-32 px-5 sm:px-10 lg:px-20 overflow-hidden text-white ${
+      className={`relative min-h-screen py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white ${
         isArabic ? 'text-right' : 'text-left'
       }`}
     >
       {/* === Background Layer === */}
-      <div className="absolute inset-0 -z-10 overflow-hidden will-change-transform">
-        <motion.div
-          className="absolute inset-0"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-        >
-          <Image
-            src={KAFD1}
-            alt={t('backgroundAlt', { defaultValue: 'King Abdullah Financial District background' })}
-            fill
-            className="object-cover object-center select-none pointer-events-none"
-            placeholder="blur"
-            loading="lazy"
-            priority={false}
-          />
-        </motion.div>
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {/* 🧠 Disable continuous scale animation on mobile for performance */}
+        {isMobile ? (
+          <div className="absolute inset-0">
+            <Image
+              src={KAFD1}
+              alt={t('backgroundAlt', {
+                defaultValue: 'King Abdullah Financial District background',
+              })}
+              fill
+              className="object-cover object-center select-none pointer-events-none"
+              placeholder="blur"
+              loading="lazy"
+              decoding="async"
+              priority={false}
+              quality={75}
+              sizes="100vw"
+            />
+          </div>
+        ) : (
+          <motion.div
+            className="absolute inset-0 will-change-transform"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: 'reverse',
+              ease: 'easeInOut',
+            }}
+          >
+            <Image
+              src={KAFD1}
+              alt={t('backgroundAlt', {
+                defaultValue: 'King Abdullah Financial District background',
+              })}
+              fill
+              className="object-cover object-center select-none pointer-events-none"
+              placeholder="blur"
+              loading="lazy"
+              decoding="async"
+              priority={false}
+            />
+          </motion.div>
+        )}
 
-        {/* === Overlay gradients === */}
+        {/* === Overlays === */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#111]/80" />
-        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[600px] sm:w-[700px] lg:w-[800px] h-[300px] sm:h-[350px] lg:h-[400px] bg-gradient-to-t from-[#d4af37]/10 to-transparent blur-2xl sm:blur-3xl rounded-full" />
+        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-t from-[#d4af37]/10 to-transparent blur-3xl rounded-full" />
       </div>
 
       {/* === Content === */}
@@ -61,15 +95,15 @@ export default function OurPhilosophyView() {
           whileInView="visible"
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
-          className="relative max-w-6xl mx-auto text-center space-y-16 sm:space-y-20"
+          className="relative max-w-6xl mx-auto text-center space-y-20"
         >
           {/* === Section Title === */}
-          <div className="px-2 sm:px-0">
+          <div>
             <motion.h2
               variants={fadeIn}
               transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
               viewport={{ once: true }}
-              className="text-3xl sm:text-5xl font-extrabold tracking-wide text-[#d4af37] mb-4 leading-snug sm:leading-tight"
+              className="text-4xl sm:text-5xl font-extrabold tracking-wide text-[#d4af37] mb-4"
             >
               {t('heading')}
             </motion.h2>
@@ -79,16 +113,15 @@ export default function OurPhilosophyView() {
               whileInView={{ scaleX: 1 }}
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
               viewport={{ once: true }}
-              className="w-20 sm:w-24 h-1 bg-gradient-to-r from-[#d4af37] to-[#f0d682] mx-auto rounded-full origin-left"
+              className="w-24 h-1 bg-gradient-to-r from-[#d4af37] to-[#f0d682] mx-auto rounded-full origin-left"
             />
           </div>
 
           {/* === Cards === */}
           <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-gray-100"
-            style={{
-              rowGap: '2rem',
-            }}
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-100 ${
+              isMobile ? 'will-change-auto' : 'will-change-transform'
+            }`}
           >
             {cards.map((card, i) => (
               <motion.div
@@ -97,19 +130,21 @@ export default function OurPhilosophyView() {
                 initial="hidden"
                 whileInView="visible"
                 transition={{
-                  delay: i * 0.2,
-                  duration: 0.8,
+                  delay: i * (isMobile ? 0 : 0.3), // disable delay chain on mobile
+                  duration: isMobile ? 0.6 : 0.8, // slightly faster on mobile
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
                 viewport={{ once: true, amount: 0.3 }}
-                className="backdrop-blur-sm bg-white/10 rounded-2xl p-6 sm:p-8 shadow-xl hover:bg-white/20 hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
+                className={`backdrop-blur-sm bg-white/10 rounded-2xl p-8 shadow-xl transition-all duration-500 ${
+                  isMobile
+                    ? 'hover:bg-white/10 hover:translate-y-0'
+                    : 'hover:bg-white/20 hover:-translate-y-2'
+                }`}
               >
-                <h3 className="text-xl sm:text-2xl font-semibold text-[#d4af37] mb-3 sm:mb-4 leading-snug">
+                <h3 className="text-2xl font-semibold text-[#d4af37] mb-4">
                   {card.title}
                 </h3>
-                <p className="text-sm sm:text-base leading-relaxed text-gray-200">
-                  {card.content}
-                </p>
+                <p className="leading-relaxed">{card.content}</p>
               </motion.div>
             ))}
           </div>
