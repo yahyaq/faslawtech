@@ -10,12 +10,13 @@ export default function HeaderView() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [language, setLanguage] = useState<'EN' | 'AR'>('EN')
 
+  // ✅ Updated navigation links
   const navigation = [
-    { name: 'Home', href: '#hero' },
-    { name: 'Who We Are', href: '#aboutUs' },
-    { name: 'Our Services', href: '#services' },
-    { name: 'Our Team', href: '#team' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About Us', href: '#aboutUs' },
+    { name: 'Guided by Purpose', href: '#guidedByPurpose' },
+    { name: 'Our Values', href: '#ourValues' },
+    // { name: 'Licenses & Partners', href: '#licensesPartners' },
+    { name: 'Services', href: '#services' },
   ]
 
   const colors = {
@@ -38,7 +39,7 @@ export default function HeaderView() {
         className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-12"
       >
         {/* === Logo Section === */}
-        <a href="#" className="flex items-center gap-3">
+        <a href="#hero" className="flex items-center gap-3">
           <Image
             src={Logo}
             alt="Faisal Abdullah AlShehri Law Firm Logo"
@@ -53,9 +54,7 @@ export default function HeaderView() {
               color: colors.gold[700],
               fontFamily: "'Playfair Display', serif",
             }}
-          >
-            {/* Faisal Abdullah AlShehri Law Firm */}
-          </span>
+          />
         </a>
 
         {/* === Mobile Menu Button === */}
@@ -108,7 +107,7 @@ export default function HeaderView() {
         <div className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white p-6 shadow-xl sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="flex items-center gap-3">
+            <a href="#hero" className="flex items-center gap-3">
               <Image
                 src={Logo}
                 alt="Faisal Abdullah AlShehri Law Firm"

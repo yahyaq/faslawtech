@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
@@ -9,6 +10,8 @@ import IconWhatsApp from '@/assets/icons/whatsapp.svg'
 import Skyline from '@/assets/pngs/SkylineHorizontal.png'
 
 export default function HeroView() {
+  const [language, setLanguage] = useState<'EN' | 'AR'>('EN')
+
   const colors = {
     gold: {
       50: '#FBF7E8',
@@ -29,15 +32,26 @@ export default function HeroView() {
     },
   }
 
+  // ✅ Handle download by language (from /public folder)
+  const handleDownload = () => {
+    const file =
+      language === 'EN'
+        ? '/profile/Faslawfirm-Profile-EN.pdf'
+        : '/profile/Faslawfirm-Profile-AR.pdf'
+
+    const link = document.createElement('a')
+    link.href = file
+    link.download = file.split('/').pop() || 'FAS-Law-Firm-Profile.pdf'
+    link.click()
+  }
+
   return (
     <section
       id="hero"
       className="relative w-full min-h-screen flex items-center justify-start overflow-hidden"
-      style={{
-        fontFamily: "'Playfair Display', serif",
-      }}
+      style={{ fontFamily: "'Playfair Display', serif" }}
     >
-      {/* === Background Image === */}
+      {/* Background */}
       <Image
         src={Skyline}
         alt="King Abdullah Financial District, Riyadh"
@@ -46,7 +60,7 @@ export default function HeroView() {
         className="object-cover object-center will-change-transform"
       />
 
-      {/* === Soft Overlay for left gradient === */}
+      {/* Left overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -54,7 +68,7 @@ export default function HeroView() {
         }}
       />
 
-      {/* === Content Positioned in Black Box Area === */}
+      {/* Content */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -106,31 +120,29 @@ export default function HeroView() {
             height={22}
             style={{ filter: 'invert(1)', opacity: 0.9 }}
           />
-          Request a Legal Consultation
+          {language === 'EN'
+            ? 'Request a Legal Consultation'
+            : 'طلب استشارة قانونية'}
         </motion.a>
+
+        {/* ✅ Download Profile Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          onClick={handleDownload}
+          className="mt-5 px-8 py-3 rounded-full font-semibold border-2 transition-all duration-300"
+          style={{
+            borderColor: colors.gold[600],
+            color: colors.gold[700],
+            fontFamily: "'Inter', sans-serif",
+            backgroundColor: 'rgba(255,255,255,0.6)',
+          }}
+        >
+          {language === 'EN'
+            ? 'Download Our Profile'
+            : 'تحميل ملف التعريف الخاص بنا'}
+        </motion.button>
       </motion.div>
-
-      {/* === Stronger Bottom Gradient with Overlap Fix === */}
-      <div
-        className="absolute bottom-[-1px] left-0 right-0 h-[12vh] z-[5]"
-        style={{
-          background: `linear-gradient(
-            to bottom,
-            ${colors.blend.top} 0%,
-            ${colors.blend.mid} 60%,
-            ${colors.blend.bottom} 100%
-          )`,
-          transform: 'translateZ(0)',
-        }}
-      />
-
-      {/* === Extra 1px Underlay to Mask Seam === */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[2px] z-[6]"
-        style={{
-          backgroundColor: colors.blend.bottom,
-        }}
-      />
     </section>
   )
 }

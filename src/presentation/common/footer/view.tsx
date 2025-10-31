@@ -29,15 +29,14 @@ export default function FooterView() {
     },
   }
 
-  // ✅ Adjusted per-icon scaling for visual balance
   const socials = [
     { icon: IconX, href: 'https://x.com', label: 'X (formerly Twitter)', scale: 1 },
     { icon: IconInstagramNew, href: 'https://instagram.com', label: 'Instagram', scale: 1.25 },
     { icon: IconLinkedInNew, href: 'https://linkedin.com', label: 'LinkedIn', scale: 1.35 },
   ]
 
+  // ✅ Removed "Home" from navigation
   const navLinks = [
-    { label: 'Home', href: '#home' },
     { label: 'About Us', href: '#aboutUs' },
     { label: 'Our Philosophy', href: '#ourPhilosophy' },
     { label: 'Our Values', href: '#ourValues' },
@@ -82,7 +81,7 @@ export default function FooterView() {
           position: 'relative',
         }}
       >
-        {/* Left: Logo & Socials */}
+        {/* Left: Clickable Logo & Socials */}
         <div
           style={{
             display: 'flex',
@@ -90,18 +89,42 @@ export default function FooterView() {
             gap: '1.5rem',
             alignItems: 'flex-start',
             flex: '1 1 250px',
+            textAlign: 'center',
           }}
         >
-          <Image
-            src={LogoWhite}
-            alt="Faisal Abdullah AlShehri Law Firm"
-            width={260}
-            height={80}
-            className="object-contain"
-          />
+          {/* ✅ Clickable logo linking to #home */}
+          <a
+            href="#home"
+            style={{
+              display: 'block',
+              margin: '0 auto',
+              textAlign: 'center',
+            }}
+          >
+            <Image
+              src={LogoWhite}
+              alt="Faisal Abdullah AlShehri Law Firm"
+              width={260}
+              height={80}
+              className="object-contain"
+              style={{
+                cursor: 'pointer',
+                display: 'block',
+                margin: '0 auto',
+              }}
+            />
+          </a>
 
           {/* Socials */}
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+            }}
+          >
             {socials.map((item, i) => (
               <motion.a
                 key={i}
@@ -123,12 +146,10 @@ export default function FooterView() {
                   transition: 'all 0.3s ease',
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.boxShadow =
-                    '0 0 15px rgba(255,255,255,0.25)')
+                  (e.currentTarget.style.boxShadow = '0 0 15px rgba(255,255,255,0.25)')
                 }
                 onMouseLeave={(e) =>
-                  (e.currentTarget.style.boxShadow =
-                    '0 0 8px rgba(255,255,255,0)')
+                  (e.currentTarget.style.boxShadow = '0 0 8px rgba(255,255,255,0)')
                 }
               >
                 <Image
@@ -137,7 +158,7 @@ export default function FooterView() {
                   width={18 * item.scale}
                   height={18 * item.scale}
                   style={{
-                    filter: 'invert(1)', // ✅ White icons for visibility
+                    filter: 'invert(1)',
                     opacity: 0.9,
                     transition: 'filter 0.3s ease',
                   }}
@@ -174,12 +195,8 @@ export default function FooterView() {
                 position: 'relative',
                 transition: 'color 0.3s ease, opacity 0.3s ease',
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = colors.gold[300])
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')
-              }
+              onMouseEnter={(e) => (e.currentTarget.style.color = colors.gold[300])}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
             >
               {link.label}
               <span
@@ -211,7 +228,7 @@ export default function FooterView() {
             alignItems: 'center',
             gap: '0.75rem',
             backgroundColor: colors.gold[500],
-            color: '#FFFFFF', // ✅ White text for contrast
+            color: '#FFFFFF',
             fontWeight: 600,
             padding: '0.9rem 1.75rem',
             borderRadius: '9999px',
@@ -240,7 +257,7 @@ export default function FooterView() {
             alt="WhatsApp"
             width={20}
             height={20}
-            style={{ filter: 'invert(1)', opacity: 0.9 }} // ✅ White icon
+            style={{ filter: 'invert(1)', opacity: 0.9 }}
           />
           Contact Us on WhatsApp
         </motion.a>
