@@ -126,7 +126,7 @@ export default function HeaderView() {
                 height={48}
                 className="object-contain"
               />
-              <span
+              {/* <span
                 className="text-lg font-bold"
                 style={{
                   color: colors.gold[700],
@@ -134,7 +134,7 @@ export default function HeaderView() {
                 }}
               >
                 {t('brandName')}
-              </span>
+              </span> */}
             </a>
             <button
               type="button"
