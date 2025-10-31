@@ -14,15 +14,16 @@
     "logoAlt": "Faisal Abdullah AlShehri Law Firm Logo"
   },
 
+
   "hero": {
-    "altText": "King Abdullah Financial District, Riyadh",
-    "logoAlt": "Faisal Abdullah AlShehri Law Firm Logo",
+    "backgroundAlt": "King Abdullah Financial District, Riyadh",
+    "brandAlt": "Faisal Abdullah AlShehri Law Firm Logo",
     "slogan": "Upholding Justice, Protecting Interests, Enabling Success",
-    "cta": {
-      "whatsapp": "Request a Legal Consultation",
-      "download": "Download Our Profile"
-    }
+    "cta": "Request a Legal Consultation",
+    "download": "Download Our Profile"
   },
+
+
 
 
   "aboutUs": {
@@ -142,5 +143,28 @@
         "desc": "Protection and registration of patents, trademarks and copyrights — safeguarding your brand and innovation."
       }
     ]
+  },
+
+  
+
+  "footer": {
+    "brandAlt": "Faisal Abdullah AlShehri Law Firm",
+    "nav": {
+      "about": "About Us",
+      "philosophy": "Our Philosophy",
+      "values": "Our Values",
+      "licensed": "Licensed & Partnered",
+      "services": "Our Services"
+    },
+    "cta": {
+      "whatsapp": "Contact Us on WhatsApp"
+    },
+    "socials": {
+      "x": "X (formerly Twitter)",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "Faisal Abdullah AlShehri Law Firm. All Rights Reserved."
   }
 }
+

@@ -2,17 +2,22 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 
 // Brand assets
 import LogoWhite from '@/assets/pngs/logo-white.png'
 
-// Updated official SVG icons
+// Icons
 import IconX from '@/assets/icons/x.svg'
 import IconInstagramNew from '@/assets/icons/instagram.svg'
 import IconLinkedInNew from '@/assets/icons/linkedin-gold.svg'
 import IconWhatsApp from '@/assets/icons/whatsapp.svg'
 
 export default function FooterView() {
+  const t = useTranslations('footer')
+  const locale = useLocale()
+  const isArabic = locale === 'ar'
+
   const colors = {
     gold: {
       300: '#EACD6F',
@@ -30,22 +35,22 @@ export default function FooterView() {
   }
 
   const socials = [
-    { icon: IconX, href: 'https://x.com', label: 'X (formerly Twitter)', scale: 1 },
-    { icon: IconInstagramNew, href: 'https://instagram.com', label: 'Instagram', scale: 1.25 },
-    { icon: IconLinkedInNew, href: 'https://linkedin.com', label: 'LinkedIn', scale: 1.35 },
+    { icon: IconX, href: 'https://x.com', label: t('socials.x'), scale: 1 },
+    { icon: IconInstagramNew, href: 'https://instagram.com', label: t('socials.instagram'), scale: 1.25 },
+    { icon: IconLinkedInNew, href: 'https://linkedin.com', label: t('socials.linkedin'), scale: 1.35 },
   ]
 
-  // ✅ Removed "Home" from navigation
   const navLinks = [
-    { label: 'About Us', href: '#aboutUs' },
-    { label: 'Our Philosophy', href: '#ourPhilosophy' },
-    { label: 'Our Values', href: '#ourValues' },
-    { label: 'Licensed & Partnered', href: '#licensed' },
-    { label: 'Our Services', href: '#our-expertise' },
+    { label: t('nav.about'), href: '#aboutUs' },
+    { label: t('nav.philosophy'), href: '#ourPhilosophy' },
+    { label: t('nav.values'), href: '#ourValues' },
+    { label: t('nav.licensed'), href: '#licensed' },
+    { label: t('nav.services'), href: '#our-expertise' },
   ]
 
   return (
     <footer
+      dir={isArabic ? 'rtl' : 'ltr'}
       style={{
         background: `linear-gradient(180deg, ${colors.gold[900]} 0%, ${colors.gold[800]} 60%, ${colors.gold[700]} 85%, ${colors.gold[600]} 100%)`,
         color: colors.stone[50],
@@ -67,7 +72,7 @@ export default function FooterView() {
         }}
       />
 
-      {/* Main layout */}
+      {/* Layout */}
       <div
         style={{
           maxWidth: '1320px',
@@ -81,7 +86,7 @@ export default function FooterView() {
           position: 'relative',
         }}
       >
-        {/* Left: Clickable Logo & Socials */}
+        {/* Left: Logo & Socials */}
         <div
           style={{
             display: 'flex',
@@ -92,7 +97,6 @@ export default function FooterView() {
             textAlign: 'center',
           }}
         >
-          {/* ✅ Clickable logo linking to #home */}
           <a
             href="#home"
             style={{
@@ -103,7 +107,7 @@ export default function FooterView() {
           >
             <Image
               src={LogoWhite}
-              alt="Faisal Abdullah AlShehri Law Firm"
+              alt={t('brandAlt')}
               width={260}
               height={80}
               className="object-contain"
@@ -115,7 +119,7 @@ export default function FooterView() {
             />
           </a>
 
-          {/* Socials */}
+          {/* Social Icons */}
           <div
             style={{
               display: 'flex',
@@ -259,7 +263,7 @@ export default function FooterView() {
             height={20}
             style={{ filter: 'invert(1)', opacity: 0.9 }}
           />
-          Contact Us on WhatsApp
+          {t('cta.whatsapp')}
         </motion.a>
       </div>
 
@@ -274,7 +278,7 @@ export default function FooterView() {
         }}
       />
 
-      {/* Footer bottom note */}
+      {/* Bottom Note */}
       <p
         style={{
           textAlign: 'center',
@@ -283,10 +287,10 @@ export default function FooterView() {
           letterSpacing: '0.02em',
         }}
       >
-        © {new Date().getFullYear()} Faisal Abdullah AlShehri Law Firm. All Rights Reserved.
+        © {new Date().getFullYear()} {t('copyright')}
       </p>
 
-      {/* Bottom gradient fade */}
+      {/* Bottom Fade */}
       <div
         style={{
           position: 'absolute',
