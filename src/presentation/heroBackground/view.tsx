@@ -57,38 +57,20 @@ export default function HeroView() {
     <section
       id="hero"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="relative w-full flex items-center justify-start overflow-hidden"
+      className="relative w-full h-[100dvh] flex items-center justify-start overflow-hidden"
       style={{
         fontFamily: "'Playfair Display', serif",
-        height: '100vh', // ✅ use fixed viewport height, not dynamic
-        minHeight: '100vh',
         position: 'relative',
-        overflow: 'hidden',
-        WebkitOverflowScrolling: 'touch',
       }}
     >
-      {/* === Background (fully stable) === */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          position: 'fixed', // ✅ fixed background prevents growth
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          pointerEvents: 'none',
-          transform: 'none',
-          transition: 'none',
-          zIndex: 0,
-        }}
-      >
+      {/* === Background (fixed and stable) === */}
+      <div className="absolute inset-0 z-0">
         <Image
           src={isArabic ? SkylineAR : SkylineEN}
           alt={t('backgroundAlt')}
           fill
           priority
-          sizes="100vw"
-          className="object-cover object-center select-none"
+          className="object-cover object-center select-none pointer-events-none will-change-transform"
           style={{
             transform: 'none',
             transition: 'none',
@@ -197,6 +179,7 @@ export default function HeroView() {
             ${colors.blend.mid} 60%,
             ${colors.blend.bottom} 100%
           )`,
+          transform: 'translateZ(0)',
         }}
       />
 
