@@ -1,10 +1,11 @@
-import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+import type { NextConfig } from 'next';
+
+// 👇 Pass both routing and request file paths
+const withNextIntl = createNextIntlPlugin({});
 
 const nextConfig: NextConfig = {
-  output: "export", // 👈 enables static export mode
-  images: {
-    unoptimized: true, // 👈 required if you use next/image with static export
-  },
+  
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

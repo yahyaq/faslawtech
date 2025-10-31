@@ -1,0 +1,16 @@
+{
+  "header": {
+    "nav": {
+      "about": "About Us",
+      "purpose": "Guided by Purpose",
+      "values": "Our Values",
+      "services": "Services"
+    },
+    "languageToggle": {
+      "english": "English",
+      "arabic": "Arabic"
+    },
+    "brandName": "FAS Law Tech",
+    "logoAlt": "Faisal Abdullah AlShehri Law Firm Logo"
+  }
+}

@@ -1,23 +1,27 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Image from 'next/image'
-import Logo from '@/assets/pngs/logo-sm.png'
+import { useState } from 'react';
+import { Dialog, DialogPanel } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
+import Logo from '@/assets/pngs/logo-sm.png';
+import { useTranslations, useLocale } from 'next-intl'; // ✅ get t() and locale
+import { useRouter, usePathname } from '@/i18n/navigation'; // ✅ uses your routing setup
 
 export default function HeaderView() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [language, setLanguage] = useState<'EN' | 'AR'>('EN')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const t = useTranslations('header');
+  const locale = useLocale(); // ✅ the active locale (en or ar)
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // ✅ Updated navigation links
+  // ✅ Navigation links from translations
   const navigation = [
-    { name: 'About Us', href: '#aboutUs' },
-    { name: 'Guided by Purpose', href: '#guidedByPurpose' },
-    { name: 'Our Values', href: '#ourValues' },
-    // { name: 'Licenses & Partners', href: '#licensesPartners' },
-    { name: 'Services', href: '#services' },
-  ]
+    { name: t('nav.about'), href: '#aboutUs' },
+    { name: t('nav.purpose'), href: '#guidedByPurpose' },
+    { name: t('nav.values'), href: '#ourValues' },
+    { name: t('nav.services'), href: '#services' },
+  ];
 
   const colors = {
     gold: {
@@ -25,14 +29,18 @@ export default function HeaderView() {
       600: '#AA8822',
       700: '#8E6E1C',
     },
-  }
+  };
+
+  // ✅ Locale Switcher
+  const handleLanguageToggle = () => {
+    const newLocale = locale === 'en' ? 'ar' : 'en';
+    router.replace(pathname, { locale: newLocale });
+  };
 
   return (
     <header
       className="relative w-full z-50 bg-white/70 backdrop-blur-md shadow-sm"
-      style={{
-        fontFamily: "'Inter', sans-serif",
-      }}
+      style={{ fontFamily: "'Inter', sans-serif" }}
     >
       <nav
         aria-label="Global"
@@ -42,19 +50,21 @@ export default function HeaderView() {
         <a href="#hero" className="flex items-center gap-3">
           <Image
             src={Logo}
-            alt="Faisal Abdullah AlShehri Law Firm Logo"
+            alt={t('logoAlt')} // ✅ translated logo alt text
             width={48}
             height={48}
             className="object-contain"
             priority
           />
-          <span
+          {/* <span
             className="text-lg font-bold tracking-wide"
             style={{
               color: colors.gold[700],
               fontFamily: "'Playfair Display', serif",
             }}
-          />
+          >
+            {t('brandName')} 
+          </span> */}
         </a>
 
         {/* === Mobile Menu Button === */}
@@ -75,9 +85,7 @@ export default function HeaderView() {
               key={item.name}
               href={item.href}
               className="text-base font-semibold transition-colors duration-200 hover:opacity-80"
-              style={{
-                color: colors.gold[700],
-              }}
+              style={{ color: colors.gold[700] }}
             >
               {item.name}
             </a>
@@ -85,14 +93,17 @@ export default function HeaderView() {
 
           {/* === Language Toggle Button === */}
           <button
-            onClick={() => setLanguage(language === 'EN' ? 'AR' : 'EN')}
+            onClick={handleLanguageToggle}
             className="ml-8 px-4 py-2 text-sm font-semibold border-2 rounded-full transition-all duration-300"
             style={{
               borderColor: colors.gold[600],
               color: colors.gold[700],
             }}
           >
-            {language === 'EN' ? 'العربية' : 'ENGLISH'}
+            {/* ✅ Dynamic translation for button text */}
+            {locale === 'en'
+              ? t('languageToggle.arabic')
+              : t('languageToggle.english')}
           </button>
         </div>
       </nav>
@@ -110,7 +121,7 @@ export default function HeaderView() {
             <a href="#hero" className="flex items-center gap-3">
               <Image
                 src={Logo}
-                alt="Faisal Abdullah AlShehri Law Firm"
+                alt={t('logoAlt')}
                 width={48}
                 height={48}
                 className="object-contain"
@@ -122,7 +133,7 @@ export default function HeaderView() {
                   fontFamily: "'Playfair Display', serif",
                 }}
               >
-                FAS Law Tech
+                {t('brandName')}
               </span>
             </a>
             <button
@@ -142,9 +153,7 @@ export default function HeaderView() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className="block rounded-lg px-3 py-2 text-base font-semibold hover:bg-gray-50"
-                style={{
-                  color: colors.gold[700],
-                }}
+                style={{ color: colors.gold[700] }}
               >
                 {item.name}
               </a>
@@ -154,18 +163,20 @@ export default function HeaderView() {
           {/* Language Toggle (Mobile) */}
           <div className="mt-8 border-t border-gray-200 pt-4">
             <button
-              onClick={() => setLanguage(language === 'EN' ? 'AR' : 'EN')}
+              onClick={handleLanguageToggle}
               className="w-full px-4 py-2 text-sm font-semibold border-2 rounded-full transition-all duration-300"
               style={{
                 borderColor: colors.gold[600],
                 color: colors.gold[700],
               }}
             >
-              {language === 'EN' ? 'العربية' : 'ENGLISH'}
+              {locale === 'en'
+                ? t('languageToggle.arabic')
+                : t('languageToggle.english')}
             </button>
           </div>
         </DialogPanel>
       </Dialog>
     </header>
-  )
+  );
 }
