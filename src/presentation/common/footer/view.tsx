@@ -16,7 +16,8 @@ import IconWhatsApp from '@/assets/icons/whatsapp.svg'
 export default function FooterView() {
   const t = useTranslations('footer')
   const locale = useLocale()
-  const isArabic = locale === 'ar'
+  const direction = locale === 'ar' ? 'rtl' : 'ltr' // ✅ same approach as HeroView
+  const isRTL = direction === 'rtl'
 
   const colors = {
     gold: {
@@ -49,7 +50,7 @@ export default function FooterView() {
 
   return (
     <footer
-      dir={isArabic ? 'rtl' : 'ltr'}
+      dir={direction} // ✅ applied dynamically (RTL/LTR)
       style={{
         background: `linear-gradient(180deg, ${colors.gold[900]} 0%, ${colors.gold[800]} 60%, ${colors.gold[700]} 85%, ${colors.gold[600]} 100%)`,
         color: colors.stone[50],
@@ -164,6 +165,7 @@ export default function FooterView() {
                     filter: 'invert(1)',
                     opacity: 0.9,
                     transition: 'filter 0.3s ease',
+                    transform: isRTL ? 'scaleX(-1)' : 'scaleX(1)', // ✅ mirrored icon in RTL
                   }}
                 />
               </motion.a>
@@ -199,7 +201,9 @@ export default function FooterView() {
                 transition: 'color 0.3s ease, opacity 0.3s ease',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = colors.gold[300])}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')
+              }
             >
               {link.label}
               <span
@@ -260,7 +264,11 @@ export default function FooterView() {
             alt="WhatsApp"
             width={20}
             height={20}
-            style={{ filter: 'invert(1)', opacity: 0.9 }}
+            style={{
+              filter: 'invert(1)',
+              opacity: 0.9,
+              transform: isRTL ? 'scaleX(-1)' : 'scaleX(1)', // ✅ mirrored icon
+            }}
           />
           {t('cta.whatsapp')}
         </motion.a>

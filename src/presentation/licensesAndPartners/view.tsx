@@ -19,14 +19,16 @@ import humanResource from '@/assets/logos/human-resource.svg';
 export default function LicensesPartnersView() {
   const t = useTranslations('licensesPartners');
   const locale = useLocale();
-  const isArabic = locale === 'ar';
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ unified direction logic
+  const isRTL = direction === 'rtl';
   const baseVelocity = 40; // speed in pixels per second
 
   const ref = useRef<HTMLDivElement>(null);
 
+  // ✅ Animate scroll direction depending on locale
   useAnimationFrame((t) => {
     if (!ref.current) return;
-    const x = ((t / 1000) * (isArabic ? baseVelocity : -baseVelocity)) % 2000;
+    const x = ((t / 1000) * (isRTL ? baseVelocity : -baseVelocity)) % 2000;
     ref.current.style.transform = `translateX(${x}px)`;
   });
 
@@ -68,7 +70,7 @@ export default function LicensesPartnersView() {
   return (
     <section
       id="licenses-partners"
-      dir={isArabic ? 'rtl' : 'ltr'}
+      dir={direction} // ✅ direction applied here
       style={{
         background: `linear-gradient(to bottom, ${colors.stone[50]}, white 40%, ${colors.gold[50]})`,
         padding: '7rem 0',

@@ -16,7 +16,8 @@ import {
 export default function OurExpertiseView() {
   const t = useTranslations('ourExpertise');
   const locale = useLocale();
-  const isArabic = locale === 'ar';
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ same logic as HeroView
+  const isRTL = direction === 'rtl';
 
   const colors = {
     gold: {
@@ -48,14 +49,13 @@ export default function OurExpertiseView() {
     BadgeCheck,
   ];
 
-  // ✅ Load from translation files
   const services = t.raw('services') as { title: string; desc: string }[];
 
   return (
     <section
       id="services"
-      dir={isArabic ? 'rtl' : 'ltr'}
-      className={isArabic ? 'text-right' : 'text-left'}
+      dir={direction} // ✅ direction applied just like HeroView
+      className={isRTL ? 'text-right' : 'text-left'}
       style={{
         position: 'relative',
         padding: '8rem 0',
@@ -161,12 +161,13 @@ export default function OurExpertiseView() {
                   transition: 'all 0.3s ease',
                 }}
               >
+                {/* Icon position follows direction */}
                 <div
                   style={{
                     position: 'absolute',
                     top: '-1.5rem',
-                    left: isArabic ? 'auto' : '1.5rem',
-                    right: isArabic ? '1.5rem' : 'auto',
+                    left: isRTL ? 'auto' : '1.5rem',
+                    right: isRTL ? '1.5rem' : 'auto',
                     background: `linear-gradient(135deg, ${colors.gold[200]}, ${colors.gold[300]})`,
                     padding: '0.75rem',
                     borderRadius: '50%',

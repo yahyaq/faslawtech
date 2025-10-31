@@ -85,7 +85,8 @@ ValueCard.displayName = 'ValueCard';
 export default function OurValuesView() {
   const t = useTranslations('ourValues');
   const locale = useLocale();
-  const isArabic = locale === 'ar';
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ unified direction logic
+  const isRTL = direction === 'rtl';
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -101,9 +102,9 @@ export default function OurValuesView() {
   return (
     <section
       id="ourValues"
-      dir={isArabic ? 'rtl' : 'ltr'}
+      dir={direction} // ✅ direction applied dynamically
       className={`relative isolate py-24 sm:py-32 px-6 sm:px-10 lg:px-20 overflow-hidden bg-[#fffaf2] ${
-        isArabic ? 'text-right' : 'text-left'
+        isRTL ? 'text-right' : 'text-left'
       }`}
     >
       {/* === Background Layer === */}

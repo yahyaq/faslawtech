@@ -9,7 +9,8 @@ import KAFD1 from '@/assets/webp/KAFD1.webp';
 export default function OurPhilosophyView() {
   const t = useTranslations('ourPhilosophy');
   const locale = useLocale();
-  const isArabic = locale === 'ar';
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ same pattern as HeroView & FooterView
+  const isRTL = direction === 'rtl';
 
   // ✅ Detect mobile devices once on mount
   const [isMobile, setIsMobile] = useState(false);
@@ -31,9 +32,9 @@ export default function OurPhilosophyView() {
   return (
     <section
       id="ourPhilosophy"
-      dir={isArabic ? 'rtl' : 'ltr'}
+      dir={direction} // ✅ applied dynamically
       className={`relative min-h-screen py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white ${
-        isArabic ? 'text-right' : 'text-left'
+        isRTL ? 'text-right' : 'text-left'
       }`}
     >
       {/* === Background Layer === */}
@@ -130,8 +131,8 @@ export default function OurPhilosophyView() {
                 initial="hidden"
                 whileInView="visible"
                 transition={{
-                  delay: i * (isMobile ? 0 : 0.3), // disable delay chain on mobile
-                  duration: isMobile ? 0.6 : 0.8, // slightly faster on mobile
+                  delay: i * (isMobile ? 0 : 0.3),
+                  duration: isMobile ? 0.6 : 0.8,
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
                 viewport={{ once: true, amount: 0.3 }}

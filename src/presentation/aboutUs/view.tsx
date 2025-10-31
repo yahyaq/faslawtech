@@ -5,10 +5,11 @@ import { motion, Variants } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
 import JusticeImage from '@/assets/pngs/scalesOfJustice-Photoroom.png';
 
-export default function View() {
+export default function AboutUsView() {
   const t = useTranslations('aboutUs');
   const locale = useLocale();
-  const isArabic = locale === 'ar';
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ Unified direction logic
+  const isRTL = direction === 'rtl';
 
   const textVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -18,17 +19,17 @@ export default function View() {
       transition: {
         delay: i * 0.4,
         duration: 0.8,
-        ease: [0.25, 0.1, 0.25, 1]
-      }
-    })
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    }),
   };
 
   return (
     <section
       id="aboutUs"
-      dir={isArabic ? 'rtl' : 'ltr'}
+      dir={direction} // ✅ Applied dynamically
       className={`relative bg-gradient-to-br from-white via-[#fffaf2] to-[#fdf8ee] py-24 px-6 sm:px-10 lg:px-20 scroll-mt-24 overflow-hidden ${
-        isArabic ? 'text-right' : 'text-left'
+        isRTL ? 'text-right' : 'text-left'
       }`}
     >
       {/* Static background glow */}
@@ -36,11 +37,11 @@ export default function View() {
 
       <div
         className={`mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 ${
-          isArabic ? 'md:grid-cols-[1fr_1fr] md:direction-rtl' : ''
+          isRTL ? 'md:grid-cols-[1fr_1fr] md:direction-rtl' : ''
         }`}
       >
         {/* === Left: Text === */}
-        <div className={`${isArabic ? 'order-1' : 'order-2'} md:order-1`}>
+        <div className={`${isRTL ? 'order-1' : 'order-2'} md:order-1`}>
           {/* Heading */}
           <motion.h2
             variants={textVariants}
@@ -50,11 +51,11 @@ export default function View() {
             custom={0}
             className="text-3xl sm:text-4xl font-bold text-[#9b7b16] mb-6 flex items-center"
           >
-            {!isArabic && (
+            {!isRTL && (
               <span className="inline-block w-10 h-1 bg-[#9b7b16] mr-3 rounded-full"></span>
             )}
             {t('heading')}
-            {isArabic && (
+            {isRTL && (
               <span className="inline-block w-10 h-1 bg-[#9b7b16] ml-3 rounded-full"></span>
             )}
           </motion.h2>
@@ -70,10 +71,10 @@ export default function View() {
               custom={1}
             >
               {t.rich('paragraph1', {
-              firmName: (chunks) => (
-                <span className="font-semibold text-[#9b7b16]">{chunks}</span>
-              )
-            })}
+                firmName: (chunks) => (
+                  <span className="font-semibold text-[#9b7b16]">{chunks}</span>
+                ),
+              })}
             </motion.p>
 
             {/* Paragraph 2 */}
@@ -87,7 +88,7 @@ export default function View() {
               {t.rich('paragraph2', {
                 highlightJustice: (chunks) => (
                   <span className="text-[#9b7b16] font-medium">{chunks}</span>
-                )
+                ),
               })}
             </motion.p>
           </div>
@@ -96,7 +97,7 @@ export default function View() {
         {/* === Right: Static Image === */}
         <div
           className={`${
-            isArabic ? 'order-2' : 'order-1'
+            isRTL ? 'order-2' : 'order-1'
           } md:order-2 relative flex justify-center items-center`}
         >
           <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#9b7b16]/10 blur-3xl rounded-full"></div>
