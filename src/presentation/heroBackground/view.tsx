@@ -114,7 +114,7 @@ export default function HeroView() {
 
         {/* === WhatsApp CTA === */}
         <motion.a
-          href="https://wa.me/966500000000"
+          href="https://wa.me/966502727198"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}

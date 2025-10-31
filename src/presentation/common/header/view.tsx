@@ -17,7 +17,7 @@ export default function HeaderView() {
 
   const navigation = [
     { name: t('nav.about'), href: '#aboutUs' },
-    { name: t('nav.purpose'), href: '#guidedByPurpose' },
+    { name: t('nav.purpose'), href: '#ourPhilosophy' },
     { name: t('nav.values'), href: '#ourValues' },
     { name: t('nav.services'), href: '#services' },
   ];

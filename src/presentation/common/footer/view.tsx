@@ -35,17 +35,16 @@ export default function FooterView() {
   }
 
   const socials = [
-    { icon: IconX, href: 'https://x.com', label: t('socials.x'), scale: 1 },
-    { icon: IconInstagramNew, href: 'https://instagram.com', label: t('socials.instagram'), scale: 1.25 },
-    { icon: IconLinkedInNew, href: 'https://linkedin.com', label: t('socials.linkedin'), scale: 1.35 },
+    { icon: IconX, href: 'https://x.com/faslawfirmsa', label: t('socials.x'), scale: 1 },
+    { icon: IconInstagramNew, href: 'https://www.instagram.com/faslawfirmsa/?igsh=bHpoM2kyZGdmNXZm&utm_source=qr#', label: t('socials.instagram'), scale: 1.25 },
+    { icon: IconLinkedInNew, href: 'https://linkedin.com/company/faslawfirmsa/about/?viewAsMember=true', label: t('socials.linkedin'), scale: 1.35 },
   ]
 
   const navLinks = [
     { label: t('nav.about'), href: '#aboutUs' },
     { label: t('nav.philosophy'), href: '#ourPhilosophy' },
     { label: t('nav.values'), href: '#ourValues' },
-    { label: t('nav.licensed'), href: '#licensed' },
-    { label: t('nav.services'), href: '#our-expertise' },
+    { label: t('nav.services'), href: '#services' },
   ]
 
   return (
@@ -222,7 +221,7 @@ export default function FooterView() {
 
         {/* Right: WhatsApp CTA */}
         <motion.a
-          href="https://wa.me/966500000000"
+          href="https://wa.me/966502727198"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}

@@ -53,7 +53,7 @@ export default function OurExpertiseView() {
 
   return (
     <section
-      id="our-expertise"
+      id="services"
       dir={isArabic ? 'rtl' : 'ltr'}
       className={isArabic ? 'text-right' : 'text-left'}
       style={{
