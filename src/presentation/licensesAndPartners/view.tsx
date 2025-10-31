@@ -70,11 +70,12 @@ export default function LicensesPartnersView() {
           zIndex: 2,
         }}
       >
-        {/* === Section Titles (from old version) === */}
+        {/* === Section Titles (fade in once when visible) === */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           style={{
             color: colors.gold[700],
             fontWeight: 600,
@@ -90,7 +91,8 @@ export default function LicensesPartnersView() {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
           style={{
             fontFamily: "'Playfair Display', serif",
             fontSize: '2.25rem',
@@ -102,7 +104,7 @@ export default function LicensesPartnersView() {
           Proudly Accredited & Partnered With
         </motion.h2>
 
-        {/* === Modern Carousel (from new version) === */}
+        {/* === Modern Carousel === */}
         <div
           style={{
             position: 'relative',
@@ -129,8 +131,12 @@ export default function LicensesPartnersView() {
             }}
           >
             {duplicated.map((logo, i) => (
-              <div
+              <motion.div
                 key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
                 style={{
                   width: '8rem',
                   height: '5rem',
@@ -154,7 +160,7 @@ export default function LicensesPartnersView() {
                   }}
                   className="logo-item"
                 />
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
