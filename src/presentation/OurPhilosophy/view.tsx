@@ -1,9 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { motion, LazyMotion, domAnimation, m } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
-import { useMemo } from 'react';
 import KAFD1 from '@/assets/webp/KAFD1.webp';
 
 export default function OurPhilosophyView() {
@@ -11,12 +10,10 @@ export default function OurPhilosophyView() {
   const locale = useLocale();
   const isArabic = locale === 'ar';
 
-  // ✅ Memoize translation cards to avoid re-renders
-  const cards = useMemo(() => t.raw('cards') as { title: string; content: string }[], [t]);
+  const cards = t.raw('cards') as { title: string; content: string }[];
 
-  // ✅ Framer motion variants
   const fadeIn = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
   };
 
@@ -24,45 +21,36 @@ export default function OurPhilosophyView() {
     <section
       id="ourPhilosophy"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className={`relative min-h-screen py-24 sm:py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white ${
+      className={`relative min-h-screen py-24 sm:py-32 px-5 sm:px-10 lg:px-20 overflow-hidden text-white ${
         isArabic ? 'text-right' : 'text-left'
       }`}
     >
       {/* === Background Layer === */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* 🔧 Simplified subtle animation for better performance */}
-        <LazyMotion features={domAnimation}>
-          <m.div
-            className="absolute inset-0"
-            initial={{ opacity: 0.95, scale: 1 }}
-            animate={{ opacity: [0.95, 1, 0.95] }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          >
-            <Image
-              src={KAFD1}
-              alt={t('backgroundAlt', { defaultValue: 'King Abdullah Financial District background' })}
-              fill
-              decoding="async"
-              loading="lazy"
-              sizes="100vw"
-              className="object-cover object-center select-none pointer-events-none"
-              placeholder="blur"
-              priority={false}
-              quality={75} // ✅ Lowered quality slightly for mobile
-              style={{
-                transform: 'none',
-              }}
-            />
-          </m.div>
-        </LazyMotion>
+      <div className="absolute inset-0 -z-10 overflow-hidden will-change-transform">
+        <motion.div
+          className="absolute inset-0"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut',
+          }}
+        >
+          <Image
+            src={KAFD1}
+            alt={t('backgroundAlt', { defaultValue: 'King Abdullah Financial District background' })}
+            fill
+            className="object-cover object-center select-none pointer-events-none"
+            placeholder="blur"
+            loading="lazy"
+            priority={false}
+          />
+        </motion.div>
 
-        {/* === Overlay Gradients (optimized) === */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/65 to-[#111]/80" />
-        <div className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-t from-[#d4af37]/10 to-transparent blur-2xl rounded-full" />
+        {/* === Overlay gradients === */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#111]/80" />
+        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[600px] sm:w-[700px] lg:w-[800px] h-[300px] sm:h-[350px] lg:h-[400px] bg-gradient-to-t from-[#d4af37]/10 to-transparent blur-2xl sm:blur-3xl rounded-full" />
       </div>
 
       {/* === Content === */}
@@ -76,12 +64,12 @@ export default function OurPhilosophyView() {
           className="relative max-w-6xl mx-auto text-center space-y-16 sm:space-y-20"
         >
           {/* === Section Title === */}
-          <div>
+          <div className="px-2 sm:px-0">
             <motion.h2
               variants={fadeIn}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
               viewport={{ once: true }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-[#d4af37] mb-4"
+              className="text-3xl sm:text-5xl font-extrabold tracking-wide text-[#d4af37] mb-4 leading-snug sm:leading-tight"
             >
               {t('heading')}
             </motion.h2>
@@ -89,38 +77,40 @@ export default function OurPhilosophyView() {
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
               viewport={{ once: true }}
               className="w-20 sm:w-24 h-1 bg-gradient-to-r from-[#d4af37] to-[#f0d682] mx-auto rounded-full origin-left"
             />
           </div>
 
           {/* === Cards === */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-gray-100">
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-gray-100"
+            style={{
+              rowGap: '2rem',
+            }}
+          >
             {cards.map((card, i) => (
-              <motion.article
+              <motion.div
                 key={card.title}
                 variants={fadeIn}
                 initial="hidden"
                 whileInView="visible"
                 transition={{
-                  delay: i * 0.15,
-                  duration: 0.7,
+                  delay: i * 0.2,
+                  duration: 0.8,
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
-                viewport={{ once: true, amount: 0.25 }}
-                className="bg-white/10 rounded-2xl p-6 sm:p-8 shadow-lg backdrop-blur-md hover:bg-white/20 hover:-translate-y-1 sm:hover:-translate-y-2 transition-transform duration-500"
-                style={{
-                  willChange: 'transform',
-                }}
+                viewport={{ once: true, amount: 0.3 }}
+                className="backdrop-blur-sm bg-white/10 rounded-2xl p-6 sm:p-8 shadow-xl hover:bg-white/20 hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
               >
-                <h3 className="text-xl sm:text-2xl font-semibold text-[#d4af37] mb-3 sm:mb-4">
+                <h3 className="text-xl sm:text-2xl font-semibold text-[#d4af37] mb-3 sm:mb-4 leading-snug">
                   {card.title}
                 </h3>
                 <p className="text-sm sm:text-base leading-relaxed text-gray-200">
                   {card.content}
                 </p>
-              </motion.article>
+              </motion.div>
             ))}
           </div>
         </motion.div>
