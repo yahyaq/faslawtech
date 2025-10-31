@@ -1,41 +1,33 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import { motion, LazyMotion, domAnimation } from 'framer-motion'
-import KAFD1 from '@/assets/webp/KAFD1.webp'
+import Image from 'next/image';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
+import { useTranslations, useLocale } from 'next-intl';
+import KAFD1 from '@/assets/webp/KAFD1.webp';
 
-// ✅ Static content (memoized outside render)
-const cards = [
-  {
-    title: 'Mission',
-    content:
-      'To protect our clients’ interests and achieve their goals by adopting the best legal practices. We rely on research, know-how, and efficiency to find legal solutions. We use state-of-the-art technology to enhance speed and efficiency during the process of court litigation and the execution of legal tasks.',
-  },
-  {
-    title: 'Vision',
-    content:
-      'To be the best legal service provider and to entrust our work to competent lawyers.',
-  },
-  {
-    title: 'What Sets Us Apart',
-    content:
-      'Effective and continuous communication with our clients through detailed reports on all legal matters and procedures we undertake. We ensure our clients are always fully informed about the status and progress of their cases.',
-  },
-]
+export default function OurPhilosophyView() {
+  const t = useTranslations('ourPhilosophy');
+  const locale = useLocale();
+  const isArabic = locale === 'ar';
 
-// ✅ Variants declared outside for better memoization
-const fadeIn = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0 },
-}
+  // ✅ Load cards dynamically from translations
+  const cards = t.raw('cards') as { title: string; content: string }[];
 
-export default function View() {
+  // ✅ Variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <section
       id="ourPhilosophy"
-      className="relative min-h-screen py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white"
+      dir={isArabic ? 'rtl' : 'ltr'}
+      className={`relative min-h-screen py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white ${
+        isArabic ? 'text-right' : 'text-left'
+      }`}
     >
-      {/* === Background Layer (GPU optimized) === */}
+      {/* === Background Layer === */}
       <div className="absolute inset-0 -z-10 overflow-hidden will-change-transform">
         <motion.div
           className="absolute inset-0"
@@ -49,7 +41,7 @@ export default function View() {
         >
           <Image
             src={KAFD1}
-            alt="King Abdullah Financial District background"
+            alt={t('backgroundAlt', { defaultValue: 'King Abdullah Financial District background' })}
             fill
             className="object-cover object-center select-none pointer-events-none"
             placeholder="blur"
@@ -58,7 +50,7 @@ export default function View() {
           />
         </motion.div>
 
-        {/* === Overlays (kept exactly same visually) === */}
+        {/* === Overlays === */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#111]/80" />
         <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-t from-[#d4af37]/10 to-transparent blur-3xl rounded-full" />
       </div>
@@ -81,7 +73,7 @@ export default function View() {
               viewport={{ once: true }}
               className="text-4xl sm:text-5xl font-extrabold tracking-wide text-[#d4af37] mb-4"
             >
-              Our Philosophy
+              {t('heading')}
             </motion.h2>
 
             <motion.div
@@ -119,5 +111,5 @@ export default function View() {
         </motion.div>
       </LazyMotion>
     </section>
-  )
+  );
 }

@@ -30,5 +30,117 @@
     "paragraph1": "Our Law firm <firmName>Faisal Abdullah Al-Shahri</firmName> is a professional company that consists of a distinguished number of experienced and competent lawyers who are experts in various legal disciplines to serve our clients throughout the Kingdom of Saudi Arabia.",
     "paragraph2": "Our legal services are based on the upholding of <highlightJustice>justice</highlightJustice> and the execution of legal tasks entrusted to us from our clients, ensuring professional legal practices that help them achieve their goals, protect their interests, and prosper sustainably.",
     "imageAlt": "Symbolic illustration representing justice and professionalism"
+  },
+
+
+  "ourPhilosophy": {
+    "heading": "Our Philosophy",
+    "backgroundAlt": "King Abdullah Financial District background",
+    "cards": [
+      {
+        "title": "Mission",
+        "content": "To protect our clients’ interests and achieve their goals by adopting the best legal practices. We rely on research, know-how, and efficiency to find legal solutions. We use state-of-the-art technology to enhance speed and efficiency during the process of court litigation and the execution of legal tasks."
+      },
+      {
+        "title": "Vision",
+        "content": "To be the best legal service provider and to entrust our work to competent lawyers."
+      },
+      {
+        "title": "What Sets Us Apart",
+        "content": "Effective and continuous communication with our clients through detailed reports on all legal matters and procedures we undertake. We ensure our clients are always fully informed about the status and progress of their cases."
+      }
+    ]
+  },
+
+
+
+  "ourValues": {
+    "heading": "Our Values",
+    "intro": "These are the principles that guide our work, shape our firm, and underpin the trust we build with all our clients.",
+    "backgroundAlt": "Riyadh skyline background",
+    "values": [
+      {
+        "title": "Privacy & Confidentiality",
+        "description": "We ensure the utmost confidentiality in all legal matters, safeguarding our clients’ information and trust."
+      },
+      {
+        "title": "Professionalism & Commitment",
+        "description": "We are dedicated to the highest standards of legal professionalism and unwavering commitment to our clients."
+      },
+      {
+        "title": "Quality & Excellence",
+        "description": "We deliver precise and effective legal solutions through continuous improvement and attention to detail."
+      },
+      {
+        "title": "Social & Legal Responsibility",
+        "description": "We uphold justice and contribute positively to the community, fostering legal awareness and ethical practice."
+      },
+      {
+        "title": "Transparency & Integrity",
+        "description": "We maintain open communication and honesty in every step of our legal services."
+      },
+      {
+        "title": "Trust & Credibility",
+        "description": "We build long-term client relationships grounded in mutual respect, trust, and proven credibility."
+      }
+    ]
+  },
+
+
+  "licensesPartners": {
+    "sectionLabel": "Licenses & Partners",
+    "heading": "Proudly Accredited & Partnered With",
+    "logos": {
+      "justice": "Ministry of Justice",
+      "monshaat": "Monsha'at",
+      "saip": "Saudi Authority for Intellectual Property",
+      "sba": "Saudi Bar Association",
+      "bog": "Board of Grievances",
+      "franchise": "Franchise Center",
+      "commerce": "Ministry of Commerce",
+      "investment": "Ministry of Investment",
+      "hr": "Human Resources Development Fund"
+    }
+  },
+
+
+  "ourExpertise": {
+    "sectionLabel": "Our Expertise",
+    "heading": "Comprehensive Legal Solutions",
+    "intro": "We offer end-to-end legal expertise across sectors — blending precision, innovation, and deep legal understanding to help our clients achieve their goals confidently.",
+    "services": [
+      {
+        "title": "Companies & Business Sector",
+        "desc": "From company setup to governance, mergers, and acquisitions — we support organisations through every legal stage of growth."
+      },
+      {
+        "title": "Commercial Franchise",
+        "desc": "Franchise agreement drafting and regulatory documentation aligned with local law and international standards."
+      },
+      {
+        "title": "Contracts & Agreements",
+        "desc": "Drafting and reviewing MOUs, employment and commercial contracts to ensure clarity and legal protection."
+      },
+      {
+        "title": "Litigation & Dispute Settlement",
+        "desc": "Representation in general & administrative courts, arbitration and mediation — delivering effective resolutions."
+      },
+      {
+        "title": "Legal Consultations",
+        "desc": "Advisory across corporate, civil and regulatory domains — helping clients make informed, confident decisions."
+      },
+      {
+        "title": "Wills & Real-Estate Settlement",
+        "desc": "Execution of wills, inheritance & real-estate settlements under Islamic law — providing fairness and clarity."
+      },
+      {
+        "title": "Debt Collection & Execution",
+        "desc": "Swift recovery of financial claims, enforcement of court/arbitrator decisions and commercial notice execution."
+      },
+      {
+        "title": "Intellectual Property Rights",
+        "desc": "Protection and registration of patents, trademarks and copyrights — safeguarding your brand and innovation."
+      }
+    ]
   }
 }

@@ -1,69 +1,48 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import { LazyMotion, domAnimation, m } from 'framer-motion'
-import { memo, useMemo } from 'react'
+import Image, { StaticImageData } from 'next/image';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { memo, useMemo } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 
 // Icons
-import IconPrivacy from '@/assets/icons/value-privacy.png'
-import IconProfessionalism from '@/assets/icons/value-professionalism.png'
-import IconQuality from '@/assets/icons/value-quality.png'
-import IconResponsibility from '@/assets/icons/value-responsibility.png'
-import IconTransparency from '@/assets/icons/value-transparency.png'
-import IconTrust from '@/assets/icons/value-trust.png'
+import IconPrivacy from '@/assets/icons/value-privacy.png';
+import IconProfessionalism from '@/assets/icons/value-professionalism.png';
+import IconQuality from '@/assets/icons/value-quality.png';
+import IconResponsibility from '@/assets/icons/value-responsibility.png';
+import IconTransparency from '@/assets/icons/value-transparency.png';
+import IconTrust from '@/assets/icons/value-trust.png';
 
 // Background
-import RiyadhSkyLines from '@/assets/webp/RiyadhSkyLines.webp'
+import RiyadhSkyLines from '@/assets/webp/RiyadhSkyLines.webp';
 
-// ✅ Static dataset declared once (never recreated)
-const values = [
-  {
-    title: 'Privacy & Confidentiality',
-    icon: IconPrivacy,
-    description:
-      'We ensure the utmost confidentiality in all legal matters, safeguarding our clients’ information and trust.',
-  },
-  {
-    title: 'Professionalism & Commitment',
-    icon: IconProfessionalism,
-    description:
-      'We are dedicated to the highest standards of legal professionalism and unwavering commitment to our clients.',
-  },
-  {
-    title: 'Quality & Excellence',
-    icon: IconQuality,
-    description:
-      'We deliver precise and effective legal solutions through continuous improvement and attention to detail.',
-  },
-  {
-    title: 'Social & Legal Responsibility',
-    icon: IconResponsibility,
-    description:
-      'We uphold justice and contribute positively to the community, fostering legal awareness and ethical practice.',
-  },
-  {
-    title: 'Transparency & Integrity',
-    icon: IconTransparency,
-    description:
-      'We maintain open communication and honesty in every step of our legal services.',
-  },
-  {
-    title: 'Trust & Credibility',
-    icon: IconTrust,
-    description:
-      'We build long-term client relationships grounded in mutual respect, trust, and proven credibility.',
-  },
-]
+// ✅ Icon mapping (linked by index)
+const icons = [
+  IconPrivacy,
+  IconProfessionalism,
+  IconQuality,
+  IconResponsibility,
+  IconTransparency,
+  IconTrust,
+];
 
 // ✅ Motion variants declared outside to prevent recreation
 const fadeIn = {
   hidden: { opacity: 0, y: 36 },
   visible: { opacity: 1, y: 0 },
-}
+};
 
 // ✅ Memoized card component (isolates re-renders)
 const ValueCard = memo(
-  ({ value, delay }: { value: (typeof values)[number]; delay: number }) => (
+  ({
+    value,
+    delay,
+    icon,
+  }: {
+    value: { title: string; description: string };
+    delay: number;
+    icon: StaticImageData;
+  }) => (
     <m.article
       initial="hidden"
       whileInView="visible"
@@ -77,7 +56,7 @@ const ValueCard = memo(
     >
       <div className="mx-auto mb-6 h-20 w-20 relative shrink-0">
         <Image
-          src={value.icon}
+          src={icon}
           alt={value.title}
           fill
           loading="lazy"
@@ -89,17 +68,27 @@ const ValueCard = memo(
       <p className="text-gray-700 leading-relaxed">{value.description}</p>
     </m.article>
   )
-)
-ValueCard.displayName = 'ValueCard'
+);
+ValueCard.displayName = 'ValueCard';
 
 export default function OurValuesView() {
-  // ✅ Static stagger map generated once
-  const stagger = useMemo(() => values.map((_, i) => i * 0.1), [])
+  const t = useTranslations('ourValues');
+  const locale = useLocale();
+  const isArabic = locale === 'ar';
+
+  // ✅ Fetch values from translations
+  const values = t.raw('values') as { title: string; description: string }[];
+
+  // ✅ Generate staggered animation delays
+  const stagger = useMemo(() => values.map((_, i) => i * 0.1), [values]);
 
   return (
     <section
       id="ourValues"
-      className="relative isolate py-24 sm:py-32 px-6 sm:px-10 lg:px-20 overflow-hidden bg-[#fffaf2]"
+      dir={isArabic ? 'rtl' : 'ltr'}
+      className={`relative isolate py-24 sm:py-32 px-6 sm:px-10 lg:px-20 overflow-hidden bg-[#fffaf2] ${
+        isArabic ? 'text-right' : 'text-left'
+      }`}
     >
       {/* === Optimized Background === */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -127,7 +116,7 @@ export default function OurValuesView() {
             viewport={{ once: true }}
             className="text-4xl sm:text-5xl font-bold text-[#9b7b16] tracking-tight"
           >
-            Our Values
+            {t('heading')}
           </m.h2>
 
           <div className="mt-4 mb-6 flex justify-center">
@@ -142,8 +131,7 @@ export default function OurValuesView() {
             viewport={{ once: true }}
             className="text-gray-700 text-lg leading-relaxed"
           >
-            These are the principles that guide our work, shape our firm, and underpin
-            the trust we build with all our clients.
+            {t('intro')}
           </m.p>
         </div>
 
@@ -153,10 +141,15 @@ export default function OurValuesView() {
           role="list"
         >
           {values.map((value, i) => (
-            <ValueCard key={value.title} value={value} delay={stagger[i]} />
+            <ValueCard
+              key={`${value.title}-${i}`}
+              value={value}
+              icon={icons[i]}
+              delay={stagger[i]}
+            />
           ))}
         </div>
       </LazyMotion>
     </section>
-  )
+  );
 }

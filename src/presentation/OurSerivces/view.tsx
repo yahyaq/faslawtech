@@ -1,6 +1,7 @@
-'use client'
+'use client';
 
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
+import { useTranslations, useLocale } from 'next-intl';
 import {
   Building2,
   BriefcaseBusiness,
@@ -10,9 +11,13 @@ import {
   ScrollText,
   Landmark,
   BadgeCheck,
-} from 'lucide-react'
+} from 'lucide-react';
 
 export default function OurExpertiseView() {
+  const t = useTranslations('ourExpertise');
+  const locale = useLocale();
+  const isArabic = locale === 'ar';
+
   const colors = {
     gold: {
       50: '#FBF7E8',
@@ -30,22 +35,27 @@ export default function OurExpertiseView() {
       200: '#E5E1DA',
       700: '#4C4741',
     },
-  }
+  };
 
-  const services = [
-    { title: 'Companies & Business Sector', desc: 'From company setup to governance, mergers, and acquisitions — we support organisations through every legal stage of growth.', icon: Building2 },
-    { title: 'Commercial Franchise', desc: 'Franchise agreement drafting and regulatory documentation aligned with local law and international standards.', icon: BriefcaseBusiness },
-    { title: 'Contracts & Agreements', desc: 'Drafting and reviewing MOUs, employment and commercial contracts to ensure clarity and legal protection.', icon: FileSignature },
-    { title: 'Litigation & Dispute Settlement', desc: 'Representation in general & administrative courts, arbitration and mediation — delivering effective resolutions.', icon: Gavel },
-    { title: 'Legal Consultations', desc: 'Advisory across corporate, civil and regulatory domains — helping clients make informed, confident decisions.', icon: BookOpenCheck },
-    { title: 'Wills & Real-Estate Settlement', desc: 'Execution of wills, inheritance & real-estate settlements under Islamic law — providing fairness and clarity.', icon: ScrollText },
-    { title: 'Debt Collection & Execution', desc: 'Swift recovery of financial claims, enforcement of court/arbitrator decisions and commercial notice execution.', icon: Landmark },
-    { title: 'Intellectual Property Rights', desc: 'Protection and registration of patents, trademarks and copyrights — safeguarding your brand and innovation.', icon: BadgeCheck },
-  ]
+  const icons = [
+    Building2,
+    BriefcaseBusiness,
+    FileSignature,
+    Gavel,
+    BookOpenCheck,
+    ScrollText,
+    Landmark,
+    BadgeCheck,
+  ];
+
+  // ✅ Load from translation files
+  const services = t.raw('services') as { title: string; desc: string }[];
 
   return (
     <section
       id="our-expertise"
+      dir={isArabic ? 'rtl' : 'ltr'}
+      className={isArabic ? 'text-right' : 'text-left'}
       style={{
         position: 'relative',
         padding: '8rem 0',
@@ -58,7 +68,8 @@ export default function OurExpertiseView() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse at top center, rgba(249,232,160,0.15), transparent 70%)',
+          background:
+            'radial-gradient(ellipse at top center, rgba(249,232,160,0.15), transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -94,7 +105,7 @@ export default function OurExpertiseView() {
               fontFamily: "'Inter', sans-serif",
             }}
           >
-            Our Expertise
+            {t('sectionLabel')}
           </p>
           <h2
             style={{
@@ -107,7 +118,7 @@ export default function OurExpertiseView() {
               textShadow: '0 1px 10px rgba(200,161,40,0.25)',
             }}
           >
-            Comprehensive Legal Solutions
+            {t('heading')}
           </h2>
           <p
             style={{
@@ -117,13 +128,11 @@ export default function OurExpertiseView() {
               color: colors.stone[700],
             }}
           >
-            We offer end-to-end legal expertise across sectors — blending
-            precision, innovation, and deep legal understanding to help our
-            clients achieve their goals confidently.
+            {t('intro')}
           </p>
         </motion.div>
 
-        {/* Grid */}
+        {/* Services Grid */}
         <div
           style={{
             display: 'grid',
@@ -132,7 +141,7 @@ export default function OurExpertiseView() {
           }}
         >
           {services.map((service, index) => {
-            const Icon = service.icon
+            const Icon = icons[index];
             return (
               <motion.div
                 key={service.title}
@@ -156,11 +165,13 @@ export default function OurExpertiseView() {
                   style={{
                     position: 'absolute',
                     top: '-1.5rem',
-                    left: '1.5rem',
+                    left: isArabic ? 'auto' : '1.5rem',
+                    right: isArabic ? '1.5rem' : 'auto',
                     background: `linear-gradient(135deg, ${colors.gold[200]}, ${colors.gold[300]})`,
                     padding: '0.75rem',
                     borderRadius: '50%',
-                    boxShadow: '0 2px 10px rgba(200,161,40,0.25), inset 0 0 8px rgba(255,255,255,0.35)',
+                    boxShadow:
+                      '0 2px 10px rgba(200,161,40,0.25), inset 0 0 8px rgba(255,255,255,0.35)',
                   }}
                 >
                   <Icon
@@ -194,7 +205,7 @@ export default function OurExpertiseView() {
                   </p>
                 </div>
               </motion.div>
-            )
+            );
           })}
         </div>
       </div>
@@ -212,5 +223,5 @@ export default function OurExpertiseView() {
         }}
       />
     </section>
-  )
+  );
 }

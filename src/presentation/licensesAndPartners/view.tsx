@@ -1,20 +1,35 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import { motion } from 'framer-motion'
+import Image from 'next/image';
+import { motion, useAnimationFrame } from 'framer-motion';
+import { useRef } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 
 // Logos
-import ministryOfJustice from '@/assets/logos/ministry-of-justice-Photoroom.png'
-import monshaat from '@/assets/logos/monshaat-Photoroom.png'
-import saip from '@/assets/logos/SAIP-1.svg'
-import sba from '@/assets/logos/SBA.svg'
-import bog from '@/assets/logos/BOG-colored-Photoroom-1.svg'
-import franchiseCenter from '@/assets/logos/Franchise-Center.svg'
-import ministryOfCommerce from '@/assets/logos/ministry-of-commerce-1.svg'
-import ministryOfInvestment from '@/assets/logos/Ministry-of-Investment.svg'
-import humanResource from '@/assets/logos/human-resource.svg'
+import ministryOfJustice from '@/assets/logos/ministry-of-justice-Photoroom.png';
+import monshaat from '@/assets/logos/monshaat-Photoroom.png';
+import saip from '@/assets/logos/SAIP-1.svg';
+import sba from '@/assets/logos/SBA.svg';
+import bog from '@/assets/logos/BOG-colored-Photoroom-1.svg';
+import franchiseCenter from '@/assets/logos/Franchise-Center.svg';
+import ministryOfCommerce from '@/assets/logos/ministry-of-commerce-1.svg';
+import ministryOfInvestment from '@/assets/logos/Ministry-of-Investment.svg';
+import humanResource from '@/assets/logos/human-resource.svg';
 
 export default function LicensesPartnersView() {
+  const t = useTranslations('licensesPartners');
+  const locale = useLocale();
+  const isArabic = locale === 'ar';
+  const baseVelocity = 40; // speed in pixels per second
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useAnimationFrame((t) => {
+    if (!ref.current) return;
+    const x = ((t / 1000) * (isArabic ? baseVelocity : -baseVelocity)) % 2000;
+    ref.current.style.transform = `translateX(${x}px)`;
+  });
+
   const colors = {
     gold: {
       50: '#FBF7E8',
@@ -34,25 +49,26 @@ export default function LicensesPartnersView() {
       200: '#E5E1DA',
       900: '#2E2A26',
     },
-  }
+  };
 
   const logos = [
-    { src: ministryOfJustice, alt: 'Ministry of Justice', scale: 0.85 },
-    { src: monshaat, alt: "Monsha'at", scale: 0.9 },
-    { src: saip, alt: 'Saudi Authority for Intellectual Property', scale: 1.4 },
-    { src: sba, alt: 'Saudi Bar Association', scale: 1.05 },
-    { src: bog, alt: 'Board of Grievances', scale: 0.8 },
-    { src: franchiseCenter, alt: 'Franchise Center', scale: 1.2 },
-    { src: ministryOfCommerce, alt: 'Ministry of Commerce', scale: 1.1 },
-    { src: ministryOfInvestment, alt: 'Ministry of Investment', scale: 1.05 },
-    { src: humanResource, alt: 'Human Resources Development Fund', scale: 1.0 },
-  ]
+    { src: ministryOfJustice, alt: t('logos.justice'), scale: 0.85 },
+    { src: monshaat, alt: t('logos.monshaat'), scale: 0.9 },
+    { src: saip, alt: t('logos.saip'), scale: 1.4 },
+    { src: sba, alt: t('logos.sba'), scale: 1.05 },
+    { src: bog, alt: t('logos.bog'), scale: 0.8 },
+    { src: franchiseCenter, alt: t('logos.franchise'), scale: 1.2 },
+    { src: ministryOfCommerce, alt: t('logos.commerce'), scale: 1.1 },
+    { src: ministryOfInvestment, alt: t('logos.investment'), scale: 1.05 },
+    { src: humanResource, alt: t('logos.hr'), scale: 1.0 },
+  ];
 
-  const duplicated = [...logos, ...logos]
+  const duplicated = [...logos, ...logos];
 
   return (
     <section
       id="licenses-partners"
+      dir={isArabic ? 'rtl' : 'ltr'}
       style={{
         background: `linear-gradient(to bottom, ${colors.stone[50]}, white 40%, ${colors.gold[50]})`,
         padding: '7rem 0',
@@ -70,7 +86,7 @@ export default function LicensesPartnersView() {
           zIndex: 2,
         }}
       >
-        {/* === Section Titles (fade in once when visible) === */}
+        {/* === Section Titles === */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -85,7 +101,7 @@ export default function LicensesPartnersView() {
             fontFamily: "'Inter', sans-serif",
           }}
         >
-          Licenses & Partners
+          {t('sectionLabel')}
         </motion.p>
 
         <motion.h2
@@ -101,10 +117,10 @@ export default function LicensesPartnersView() {
             marginBottom: '3.5rem',
           }}
         >
-          Proudly Accredited & Partnered With
+          {t('heading')}
         </motion.h2>
 
-        {/* === Modern Carousel === */}
+        {/* === Infinite Scrolling Carousel === */}
         <div
           style={{
             position: 'relative',
@@ -115,28 +131,19 @@ export default function LicensesPartnersView() {
               'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
           }}
         >
-          <motion.div
+          <div
+            ref={ref}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '4rem',
               width: 'max-content',
-            }}
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{
-              repeat: Infinity,
-              repeatType: 'loop',
-              duration: 40,
-              ease: 'linear',
+              willChange: 'transform',
             }}
           >
             {duplicated.map((logo, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.05 }}
                 style={{
                   width: '8rem',
                   height: '5rem',
@@ -160,9 +167,9 @@ export default function LicensesPartnersView() {
                   }}
                   className="logo-item"
                 />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -190,5 +197,5 @@ export default function LicensesPartnersView() {
         }
       `}</style>
     </section>
-  )
+  );
 }
