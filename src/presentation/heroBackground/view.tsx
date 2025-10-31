@@ -57,23 +57,30 @@ export default function HeroView() {
     <section
       id="hero"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="relative w-full min-h-screen flex items-center justify-start overflow-hidden"
+      className="relative w-full h-[100dvh] flex items-center justify-start overflow-hidden"
       style={{
         fontFamily: "'Playfair Display', serif",
+        position: 'relative',
       }}
     >
-      {/* === Background (switches by locale) === */}
-      <Image
-        src={isArabic ? SkylineAR : SkylineEN}
-        alt={t('backgroundAlt')}
-        fill
-        priority
-        className="object-cover object-center transition-all duration-700 will-change-transform"
-      />
+      {/* === Background (fixed and stable) === */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={isArabic ? SkylineAR : SkylineEN}
+          alt={t('backgroundAlt')}
+          fill
+          priority
+          className="object-cover object-center select-none pointer-events-none will-change-transform"
+          style={{
+            transform: 'none',
+            transition: 'none',
+          }}
+        />
+      </div>
 
-      {/* === Directional overlay (also flips with locale) === */}
+      {/* === Directional overlay === */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 z-[1] pointer-events-none"
         style={{
           background: isArabic
             ? `linear-gradient(to left, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`
@@ -83,7 +90,7 @@ export default function HeroView() {
 
       {/* === Content === */}
       <motion.div
-        key={locale} // ensure reanimation when switching
+        key={locale}
         initial={{ opacity: 0, x: isArabic ? 50 : -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, ease: 'easeOut' }}
@@ -100,7 +107,7 @@ export default function HeroView() {
           width={460}
           height={160}
           priority
-          className="mb-6 h-auto w-auto drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]"
+          className="mb-6 h-auto w-auto drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)] select-none"
         />
 
         {/* === Slogan === */}
