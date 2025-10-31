@@ -16,9 +16,9 @@ import SkylineAR from '@/assets/pngs/SkylineHorizontalFlip.png'
 export default function HeroView() {
   const t = useTranslations('hero')
   const locale = useLocale()
-  const isArabic = locale === 'ar'
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'
 
-  const [language, setLanguage] = useState<'EN' | 'AR'>(isArabic ? 'AR' : 'EN')
+  const [language, setLanguage] = useState<'EN' | 'AR'>(direction === 'rtl' ? 'AR' : 'EN')
 
   const colors = {
     gold: {
@@ -40,7 +40,7 @@ export default function HeroView() {
     },
   }
 
-  // ✅ Dynamic PDF download by language
+  // ✅ PDF download
   const handleDownload = () => {
     const file =
       language === 'EN'
@@ -56,49 +56,37 @@ export default function HeroView() {
   return (
     <section
       id="hero"
-      dir={isArabic ? 'rtl' : 'ltr'}
-      className="relative w-full h-[100dvh] flex items-center justify-start overflow-hidden"
-      style={{
-        fontFamily: "'Playfair Display', serif",
-        position: 'relative',
-      }}
+      dir={direction}
+      className="relative w-full min-h-screen flex items-center justify-start overflow-hidden"
+      style={{ fontFamily: "'Playfair Display', serif" }}
     >
-      {/* === Background (fixed and stable) === */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={isArabic ? SkylineAR : SkylineEN}
-          alt={t('backgroundAlt')}
-          fill
-          priority
-          className="object-cover object-center select-none pointer-events-none will-change-transform"
-          style={{
-            transform: 'none',
-            transition: 'none',
-          }}
-        />
-      </div>
+      {/* === Background === */}
+      <Image
+        src={direction === 'rtl' ? SkylineAR : SkylineEN}
+        alt={t('backgroundAlt')}
+        fill
+        priority
+        className="object-cover object-center transition-all duration-700 will-change-transform"
+      />
 
-      {/* === Directional overlay === */}
+      {/* === Overlay === */}
       <div
-        className="absolute inset-0 z-[1] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: isArabic
-            ? `linear-gradient(to left, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`
-            : `linear-gradient(to right, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`,
+          background:
+            direction === 'rtl'
+              ? `linear-gradient(to left, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`
+              : `linear-gradient(to right, rgba(250,247,232,0.95) 0%, rgba(250,247,232,0.7) 35%, rgba(250,247,232,0) 65%)`,
         }}
       />
 
       {/* === Content === */}
       <motion.div
         key={locale}
-        initial={{ opacity: 0, x: isArabic ? 50 : -50 }}
+        initial={{ opacity: 0, x: direction === 'rtl' ? 50 : -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, ease: 'easeOut' }}
-        className={`relative z-10 flex flex-col justify-center max-w-xl ${
-          isArabic
-            ? 'items-end pr-[8%] lg:pr-[10%] pl-4 text-right'
-            : 'items-start pl-[8%] lg:pl-[10%] pr-4 text-left'
-        }`}
+        className="relative z-10 flex flex-col justify-center max-w-xl items-start text-start ps-[8%] lg:ps-[10%] pe-4"
       >
         {/* === Logo === */}
         <Image
@@ -107,12 +95,12 @@ export default function HeroView() {
           width={460}
           height={160}
           priority
-          className="mb-6 h-auto w-auto drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)] select-none"
+          className="mb-6 h-auto w-auto drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]"
         />
 
         {/* === Slogan === */}
         <p
-          className="mb-8"
+          className="mb-8 text-start"
           style={{
             fontFamily: "'Playfair Display', serif",
             fontSize: '1.55rem',
@@ -146,7 +134,7 @@ export default function HeroView() {
             style={{
               filter: 'invert(1)',
               opacity: 0.9,
-              transform: isArabic ? 'scaleX(-1)' : 'scaleX(1)',
+              transform: direction === 'rtl' ? 'scaleX(-1)' : 'scaleX(1)',
             }}
           />
           {t('cta')}
@@ -157,7 +145,7 @@ export default function HeroView() {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
           onClick={handleDownload}
-          className="mt-5 px-8 py-3 rounded-full font-semibold border-2 transition-all duration-300"
+          className="mt-5 px-8 py-3 rounded-full font-semibold border-2 transition-all duration-300 text-start"
           style={{
             borderColor: colors.gold[600],
             color: colors.gold[700],
@@ -183,12 +171,9 @@ export default function HeroView() {
         }}
       />
 
-      {/* === Underlay fix === */}
       <div
         className="absolute bottom-0 left-0 right-0 h-[2px] z-[6]"
-        style={{
-          backgroundColor: colors.blend.bottom,
-        }}
+        style={{ backgroundColor: colors.blend.bottom }}
       />
     </section>
   )
