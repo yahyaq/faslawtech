@@ -17,8 +17,7 @@ import {
 export default function OurExpertiseView() {
   const t = useTranslations('ourExpertise')
   const locale = useLocale()
-  const direction = locale === 'ar' ? 'rtl' : 'ltr'
-  const isRTL = direction === 'rtl'
+  const isRTL = locale === 'ar' // ✅ Only used for dash direction and Arabic font handling
 
   // ✅ Detect mobile devices
   const [isMobile, setIsMobile] = useState(false)
@@ -63,7 +62,7 @@ export default function OurExpertiseView() {
 
   const services = t.raw('services') as { title: string; desc: string }[]
 
-  // ✅ Type-safe unified fadeIn animation variant
+  // ✅ Unified fadeIn variant
   const fadeIn: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -79,8 +78,6 @@ export default function OurExpertiseView() {
   return (
     <section
       id="services"
-      dir={direction}
-      className={isRTL ? 'text-right' : 'text-left'}
       style={{
         position: 'relative',
         padding: '8rem 0',
@@ -137,7 +134,7 @@ export default function OurExpertiseView() {
               {t('sectionLabel')}
             </motion.p>
 
-            {/* ✅ Arabic-compatible font fallback */}
+            {/* ✅ Arabic-compatible heading font */}
             <motion.h2
               variants={fadeIn}
               viewport={{ once: true }}
@@ -158,7 +155,7 @@ export default function OurExpertiseView() {
               {t('heading')}
             </motion.h2>
 
-            {/* Animated dash line */}
+            {/* === Animated dash line (RTL-aware) === */}
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
@@ -290,7 +287,7 @@ export default function OurExpertiseView() {
         </LazyMotion>
       </div>
 
-      {/* Bottom fade */}
+      {/* === Bottom Fade === */}
       <div
         style={{
           position: 'absolute',

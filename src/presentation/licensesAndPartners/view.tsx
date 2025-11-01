@@ -1,36 +1,35 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { motion, useAnimationFrame } from 'framer-motion';
-import { useRef } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import Image from 'next/image'
+import { motion, useAnimationFrame } from 'framer-motion'
+import { useRef } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 
 // Logos
-import ministryOfJustice from '@/assets/logos/ministry-of-justice-Photoroom.png';
-import monshaat from '@/assets/logos/monshaat-Photoroom.png';
-import saip from '@/assets/logos/SAIP-1.svg';
-import sba from '@/assets/logos/SBA.svg';
-import bog from '@/assets/logos/BOG-colored-Photoroom-1.svg';
-import franchiseCenter from '@/assets/logos/Franchise-Center.svg';
-import ministryOfCommerce from '@/assets/logos/ministry-of-commerce-1.svg';
-import ministryOfInvestment from '@/assets/logos/Ministry-of-Investment.svg';
-import humanResource from '@/assets/logos/human-resource.svg';
+import ministryOfJustice from '@/assets/logos/ministry-of-justice-Photoroom.png'
+import monshaat from '@/assets/logos/monshaat-Photoroom.png'
+import saip from '@/assets/logos/SAIP-1.svg'
+import sba from '@/assets/logos/SBA.svg'
+import bog from '@/assets/logos/BOG-colored-Photoroom-1.svg'
+import franchiseCenter from '@/assets/logos/Franchise-Center.svg'
+import ministryOfCommerce from '@/assets/logos/ministry-of-commerce-1.svg'
+import ministryOfInvestment from '@/assets/logos/Ministry-of-Investment.svg'
+import humanResource from '@/assets/logos/human-resource.svg'
 
 export default function LicensesPartnersView() {
-  const t = useTranslations('licensesPartners');
-  const locale = useLocale();
-  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ unified direction logic
-  const isRTL = direction === 'rtl';
-  const baseVelocity = 40; // speed in pixels per second
+  const t = useTranslations('licensesPartners')
+  const locale = useLocale()
+  const isRTL = locale === 'ar' // ✅ Only used for scroll direction
+  const baseVelocity = 40 // speed in pixels per second
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null)
 
-  // ✅ Animate scroll direction depending on locale
+  // ✅ Animate scroll direction based on locale
   useAnimationFrame((t) => {
-    if (!ref.current) return;
-    const x = ((t / 1000) * (isRTL ? baseVelocity : -baseVelocity)) % 2000;
-    ref.current.style.transform = `translateX(${x}px)`;
-  });
+    if (!ref.current) return
+    const x = ((t / 1000) * (isRTL ? baseVelocity : -baseVelocity)) % 2000
+    ref.current.style.transform = `translateX(${x}px)`
+  })
 
   const colors = {
     gold: {
@@ -51,7 +50,7 @@ export default function LicensesPartnersView() {
       200: '#E5E1DA',
       900: '#2E2A26',
     },
-  };
+  }
 
   const logos = [
     { src: ministryOfJustice, alt: t('logos.justice'), scale: 0.85 },
@@ -63,14 +62,13 @@ export default function LicensesPartnersView() {
     { src: ministryOfCommerce, alt: t('logos.commerce'), scale: 1.1 },
     { src: ministryOfInvestment, alt: t('logos.investment'), scale: 1.05 },
     { src: humanResource, alt: t('logos.hr'), scale: 1.0 },
-  ];
+  ]
 
-  const duplicated = [...logos, ...logos];
+  const duplicated = [...logos, ...logos]
 
   return (
     <section
       id="licenses-partners"
-      dir={direction} // ✅ direction applied here
       style={{
         background: `linear-gradient(to bottom, ${colors.stone[50]}, white 40%, ${colors.gold[50]})`,
         padding: '7rem 0',
@@ -112,11 +110,17 @@ export default function LicensesPartnersView() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily:
+              locale === 'ar'
+                ? "'Tajawal', 'Noto Sans Arabic', sans-serif"
+                : "'Playfair Display', serif",
             fontSize: '2.25rem',
             color: colors.stone[900],
             fontWeight: 700,
             marginBottom: '3.5rem',
+            letterSpacing: locale === 'ar' ? 'normal' : '0.03em',
+            textTransform: locale === 'ar' ? 'none' : 'uppercase',
+            lineHeight: 1.2,
           }}
         >
           {t('heading')}
@@ -199,5 +203,5 @@ export default function LicensesPartnersView() {
         }
       `}</style>
     </section>
-  );
+  )
 }
