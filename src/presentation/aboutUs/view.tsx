@@ -1,15 +1,12 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { motion, Variants } from 'framer-motion';
-import { useTranslations, useLocale } from 'next-intl';
-import JusticeImage from '@/assets/pngs/scalesOfJustice-Photoroom.png';
+import Image from 'next/image'
+import { motion, Variants } from 'framer-motion'
+import { useTranslations } from 'next-intl'
+import JusticeImage from '@/assets/pngs/scalesOfJustice-Photoroom.png'
 
-export default function AboutUsView() {
-  const t = useTranslations('aboutUs');
-  const locale = useLocale();
-  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ Unified direction logic
-  const isRTL = direction === 'rtl';
+export default function View() {
+  const t = useTranslations('aboutUs')
 
   const textVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -22,26 +19,19 @@ export default function AboutUsView() {
         ease: [0.25, 0.1, 0.25, 1],
       },
     }),
-  };
+  }
 
   return (
     <section
       id="aboutUs"
-      dir={direction} // ✅ Applied dynamically
-      className={`relative bg-gradient-to-br from-white via-[#fffaf2] to-[#fdf8ee] py-24 px-6 sm:px-10 lg:px-20 scroll-mt-24 overflow-hidden ${
-        isRTL ? 'text-right' : 'text-left'
-      }`}
+      className="relative bg-gradient-to-br from-white via-[#fffaf2] to-[#fdf8ee] py-24 px-6 sm:px-10 lg:px-20 scroll-mt-24 overflow-hidden"
     >
       {/* Static background glow */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_bottom_right,rgba(200,161,40,0.06),transparent_70%)]"></div>
 
-      <div
-        className={`mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 ${
-          isRTL ? 'md:grid-cols-[1fr_1fr] md:direction-rtl' : ''
-        }`}
-      >
+      <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
         {/* === Left: Text === */}
-        <div className={`${isRTL ? 'order-1' : 'order-2'} md:order-1`}>
+        <div>
           {/* Heading */}
           <motion.h2
             variants={textVariants}
@@ -49,15 +39,10 @@ export default function AboutUsView() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={0}
-            className="text-3xl sm:text-4xl font-bold text-[#9b7b16] mb-6 flex items-center"
+            className="text-3xl sm:text-4xl font-bold text-[#9b7b16] mb-6 flex items-center gap-3"
           >
-            {!isRTL && (
-              <span className="inline-block w-10 h-1 bg-[#9b7b16] mr-3 rounded-full"></span>
-            )}
+            <span className="inline-block w-10 h-1 bg-[#9b7b16] mr-2 rounded-full"></span>
             {t('heading')}
-            {isRTL && (
-              <span className="inline-block w-10 h-1 bg-[#9b7b16] ml-3 rounded-full"></span>
-            )}
           </motion.h2>
 
           {/* Paragraphs */}
@@ -95,11 +80,7 @@ export default function AboutUsView() {
         </div>
 
         {/* === Right: Static Image === */}
-        <div
-          className={`${
-            isRTL ? 'order-2' : 'order-1'
-          } md:order-2 relative flex justify-center items-center`}
-        >
+        <div className="relative flex justify-center items-center">
           <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#9b7b16]/10 blur-3xl rounded-full"></div>
           <Image
             src={JusticeImage}
@@ -111,5 +92,5 @@ export default function AboutUsView() {
         </div>
       </div>
     </section>
-  );
+  )
 }

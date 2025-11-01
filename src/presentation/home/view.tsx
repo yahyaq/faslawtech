@@ -13,7 +13,7 @@ import FooterView from "@/presentation/common/footer/view"
 export default function View(){
     return (
     <main id="home" className="">
-      <HeaderView/>
+      {/* <HeaderView/> */}
       <HeroBackgroundView/>
       <AboutUsView/>
       <OurPhilosophyView/>

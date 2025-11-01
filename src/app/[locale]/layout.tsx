@@ -4,7 +4,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import routing from "@/i18n/routing";
-// import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import HeaderView from "@/presentation/common/header/view";
 
 // === Fonts ===
 const geistSans = Geist({
@@ -44,12 +44,15 @@ export default async function LocaleLayout({
   // const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* ✅ Global Intl Provider + Smooth Scroll */}
         <NextIntlClientProvider locale={locale}>
+          <div dir="ltr">
+            <HeaderView/>  {/* Force LTR for this one */}
+          </div>
           {children}
         </NextIntlClientProvider>
       </body>
