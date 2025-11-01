@@ -1,7 +1,7 @@
 'use client'
 
 import Image, { StaticImageData } from 'next/image'
-import { motion, LazyMotion, domAnimation } from 'framer-motion'
+import { motion, LazyMotion, domAnimation, type Variants, type Easing } from 'framer-motion'
 import { memo, useMemo, useEffect, useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 
@@ -26,13 +26,20 @@ const icons = [
   IconTrust,
 ]
 
-// ✅ Motion variants (matching “good code”)
-const fadeIn = {
+// ✅ Motion variants
+const fadeIn: Variants = {
   hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.25, 0.1, 0.25, 1] as Easing,
+    },
+  },
 }
 
-// ✅ Memoized Value Card (matches fade-in smoothness)
+// ✅ Memoized Value Card
 const ValueCard = memo(
   ({
     value,
@@ -51,14 +58,14 @@ const ValueCard = memo(
       whileInView="visible"
       transition={{
         delay: isMobile ? 0 : delay,
-        duration: isMobile ? 0.6 : 0.8,
+        duration: isMobile ? 0.5 : 0.8,
         ease: [0.25, 0.1, 0.25, 1],
       }}
       viewport={{ once: true, amount: 0.3 }}
       className={`relative rounded-3xl border border-[#e8dfc7]/70 bg-white/70 backdrop-blur-md p-8 sm:p-10 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.15)]
         ${isMobile ? 'hover:bg-white/75' : 'hover:bg-white/85 hover:border-[#c5a227] hover:-translate-y-1'}
         transition-transform duration-500 ${
-          isMobile ? 'will-change-auto' : 'will-change-transform'
+          isMobile ? 'transform-gpu will-change-transform' : 'will-change-transform'
         }`}
     >
       <div className="mx-auto mb-6 h-20 w-20 relative shrink-0">
@@ -73,9 +80,7 @@ const ValueCard = memo(
           className="object-contain opacity-95 select-none"
         />
       </div>
-      <h3 className="text-xl font-semibold text-[#9b7b16] mb-3">
-        {value.title}
-      </h3>
+      <h3 className="text-xl font-semibold text-[#9b7b16] mb-3">{value.title}</h3>
       <p className="text-gray-700 leading-relaxed">{value.description}</p>
     </motion.article>
   )
@@ -90,11 +95,14 @@ export default function OurValuesView() {
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768)
+      const handleResize = () => setIsMobile(window.innerWidth < 768)
+      handleResize()
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
     }
   }, [])
 
-  // ✅ Fetch values and stagger delays
+  // ✅ Values
   const values = t.raw('values') as { title: string; description: string }[]
   const stagger = useMemo(() => values.map((_, i) => i * 0.3), [values])
 
@@ -105,25 +113,50 @@ export default function OurValuesView() {
     >
       {/* === Background Layer === */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
-        <Image
-          src={RiyadhSkyLines}
-          alt="Riyadh skyline background"
-          fill
-          priority={false}
-          placeholder="blur"
-          sizes={isMobile ? '(max-width: 768px) 100vw' : '100vw'}
-          quality={isMobile ? 70 : 90}
-          className={`object-cover object-center select-none ${
-            isMobile ? 'opacity-70' : 'opacity-75'
-          }`}
-          style={{
-            filter: isMobile
-              ? 'contrast(1.05) saturate(1.02)'
-              : 'contrast(1.08) saturate(1.05)',
-          }}
-          loading="lazy"
-          decoding="async"
-        />
+        {isMobile ? (
+          // ✅ Use motion.div for smooth fade-in background on mobile
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="absolute inset-0 transform-gpu will-change-opacity"
+          >
+            <Image
+              src={RiyadhSkyLines}
+              alt="Riyadh skyline background"
+              fill
+              priority={false}
+              placeholder="blur"
+              sizes="100vw"
+              quality={70}
+              className="object-cover object-center select-none opacity-70"
+              style={{
+                filter: 'contrast(1.05) saturate(1.02)',
+              }}
+              loading="lazy"
+              decoding="async"
+            />
+          </motion.div>
+        ) : (
+          // ✅ Desktop untouched
+          <>
+            <Image
+              src={RiyadhSkyLines}
+              alt="Riyadh skyline background"
+              fill
+              priority={false}
+              placeholder="blur"
+              sizes="100vw"
+              quality={90}
+              className="object-cover object-center select-none opacity-75"
+              style={{
+                filter: 'contrast(1.08) saturate(1.05)',
+              }}
+              loading="lazy"
+              decoding="async"
+            />
+          </>
+        )}
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.85),rgba(247,241,217,0.75),rgba(233,224,185,0.6))]" />
       </div>
 
@@ -133,7 +166,7 @@ export default function OurValuesView() {
           variants={fadeIn}
           initial="hidden"
           whileInView="visible"
-          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as Easing }}
           viewport={{ once: true }}
           className="relative max-w-6xl mx-auto text-center space-y-20"
         >
@@ -141,7 +174,7 @@ export default function OurValuesView() {
           <div>
             <motion.h2
               variants={fadeIn}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as Easing }}
               viewport={{ once: true }}
               className="text-4xl sm:text-5xl font-extrabold tracking-wide text-[#9b7b16] mb-4"
             >
@@ -151,7 +184,7 @@ export default function OurValuesView() {
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as Easing }}
               viewport={{ once: true }}
               className={`w-24 h-1 bg-gradient-to-r from-[#9b7b16] to-[#c5a227] mx-auto rounded-full ${
                 isArabic ? 'origin-right' : 'origin-left'
@@ -163,7 +196,7 @@ export default function OurValuesView() {
               transition={{
                 delay: 0.2,
                 duration: 0.8,
-                ease: [0.25, 0.1, 0.25, 1],
+                ease: [0.25, 0.1, 0.25, 1] as Easing,
               }}
               viewport={{ once: true }}
               className="text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto mt-6"
@@ -175,7 +208,7 @@ export default function OurValuesView() {
           {/* === Value Grid === */}
           <div
             className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-7xl mx-auto ${
-              isMobile ? 'will-change-auto' : 'will-change-transform'
+              isMobile ? 'transform-gpu will-change-opacity' : 'will-change-transform'
             }`}
           >
             {values.map((value, i) => (

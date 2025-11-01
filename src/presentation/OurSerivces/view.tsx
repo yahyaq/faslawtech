@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, LazyMotion, domAnimation, type Variants } from 'framer-motion'
+import { motion, LazyMotion, domAnimation, type Variants, type Easing } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
+import { useEffect, useState } from 'react'
 import {
   Building2,
   BriefcaseBusiness,
@@ -18,6 +19,17 @@ export default function OurExpertiseView() {
   const locale = useLocale()
   const direction = locale === 'ar' ? 'rtl' : 'ltr'
   const isRTL = direction === 'rtl'
+
+  // ✅ Detect mobile devices
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => setIsMobile(window.innerWidth < 768)
+      handleResize()
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const colors = {
     gold: {
@@ -58,8 +70,8 @@ export default function OurExpertiseView() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.1, 0.25, 1] as any, // ✅ TS-safe easing
+        duration: isMobile ? 0.5 : 0.8,
+        ease: [0.25, 0.1, 0.25, 1] as Easing,
       },
     },
   }
@@ -103,6 +115,7 @@ export default function OurExpertiseView() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            className={isMobile ? 'transform-gpu will-change-opacity' : ''}
             style={{
               textAlign: 'center',
               maxWidth: '680px',
@@ -144,7 +157,7 @@ export default function OurExpertiseView() {
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as any }}
+              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as Easing }}
               viewport={{ once: true }}
               style={{
                 width: '6rem',
@@ -172,6 +185,7 @@ export default function OurExpertiseView() {
 
           {/* === Services Grid === */}
           <div
+            className={`${isMobile ? 'transform-gpu will-change-opacity' : ''}`}
             style={{
               display: 'grid',
               gap: '3rem',
@@ -187,21 +201,28 @@ export default function OurExpertiseView() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.3 }}
-                  whileHover={{
-                    y: -8,
-                    boxShadow: '0 15px 30px rgba(200,161,40,0.25)',
-                    transition: {
-                      type: 'spring',
-                      stiffness: 400,
-                      damping: 18,
-                      duration: 0.2, // ✅ much snappier hover
-                    },
-                  }}
+                  whileHover={
+                    isMobile
+                      ? undefined
+                      : {
+                          y: -8,
+                          boxShadow: '0 15px 30px rgba(200,161,40,0.25)',
+                          transition: {
+                            type: 'spring',
+                            stiffness: 400,
+                            damping: 18,
+                            duration: 0.2,
+                          },
+                        }
+                  }
                   transition={{
-                    duration: 0.8, // ✅ for fade-in only
-                    ease: [0.25, 0.1, 0.25, 1] as any,
-                    delay: index * 0.2,
+                    duration: isMobile ? 0.6 : 0.8,
+                    ease: [0.25, 0.1, 0.25, 1] as Easing,
+                    delay: index * (isMobile ? 0 : 0.2),
                   }}
+                  className={`${
+                    isMobile ? 'transform-gpu will-change-transform' : ''
+                  }`}
                   style={{
                     position: 'relative',
                     padding: '2.25rem 2rem',
@@ -260,7 +281,6 @@ export default function OurExpertiseView() {
                 </motion.div>
               )
             })}
-
           </div>
         </LazyMotion>
       </div>
