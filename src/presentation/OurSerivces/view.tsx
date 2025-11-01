@@ -137,17 +137,22 @@ export default function OurExpertiseView() {
               {t('sectionLabel')}
             </motion.p>
 
+            {/* ✅ Arabic-compatible font fallback */}
             <motion.h2
               variants={fadeIn}
               viewport={{ once: true }}
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: isRTL
+                  ? "'Tajawal', 'Noto Sans Arabic', sans-serif"
+                  : "'Playfair Display', serif",
                 fontSize: '3rem',
                 lineHeight: 1.2,
                 color: colors.gold[700],
                 fontWeight: 700,
                 marginBottom: '1.5rem',
                 textShadow: '0 1px 10px rgba(200,161,40,0.25)',
+                letterSpacing: isRTL ? 'normal' : '0.05em',
+                textTransform: isRTL ? 'none' : 'uppercase',
               }}
             >
               {t('heading')}
