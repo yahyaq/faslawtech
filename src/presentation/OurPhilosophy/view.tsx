@@ -1,45 +1,40 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { motion, LazyMotion, domAnimation } from 'framer-motion';
-import { useTranslations, useLocale } from 'next-intl';
-import { useEffect, useState } from 'react';
-import KAFD1 from '@/assets/webp/KAFD1.webp';
+import Image from 'next/image'
+import { motion, LazyMotion, domAnimation } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
+import { useEffect, useState } from 'react'
+import KAFD1 from '@/assets/webp/KAFD1.webp'
 
 export default function OurPhilosophyView() {
-  const t = useTranslations('ourPhilosophy');
-  const locale = useLocale();
-  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ same pattern as HeroView & FooterView
-  const isRTL = direction === 'rtl';
+  const t = useTranslations('ourPhilosophy')
+  const locale = useLocale()
+  const isArabic = locale === 'ar' // ✅ detect Arabic locale
 
   // ✅ Detect mobile devices once on mount
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 768)
     }
-  }, []);
+  }, [])
 
   // ✅ Load cards dynamically from translations
-  const cards = t.raw('cards') as { title: string; content: string }[];
+  const cards = t.raw('cards') as { title: string; content: string }[]
 
   // ✅ Motion variants
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
-  };
+  }
 
   return (
     <section
       id="ourPhilosophy"
-      dir={direction} // ✅ applied dynamically
-      className={`relative min-h-screen py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white ${
-        isRTL ? 'text-right' : 'text-left'
-      }`}
+      className="relative min-h-screen py-32 px-6 sm:px-10 lg:px-20 overflow-hidden text-white"
     >
       {/* === Background Layer === */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* 🧠 Disable continuous scale animation on mobile for performance */}
         {isMobile ? (
           <div className="absolute inset-0">
             <Image
@@ -114,7 +109,9 @@ export default function OurPhilosophyView() {
               whileInView={{ scaleX: 1 }}
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
               viewport={{ once: true }}
-              className="w-24 h-1 bg-gradient-to-r from-[#d4af37] to-[#f0d682] mx-auto rounded-full origin-left"
+              className={`w-24 h-1 bg-gradient-to-r from-[#d4af37] to-[#f0d682] mx-auto rounded-full ${
+                isArabic ? 'origin-right' : 'origin-left'
+              }`}
             />
           </div>
 
@@ -152,5 +149,5 @@ export default function OurPhilosophyView() {
         </motion.div>
       </LazyMotion>
     </section>
-  );
+  )
 }

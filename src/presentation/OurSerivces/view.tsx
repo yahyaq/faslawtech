@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import { useTranslations, useLocale } from 'next-intl';
+import { motion, LazyMotion, domAnimation, type Variants } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import {
   Building2,
   BriefcaseBusiness,
@@ -11,13 +11,13 @@ import {
   ScrollText,
   Landmark,
   BadgeCheck,
-} from 'lucide-react';
+} from 'lucide-react'
 
 export default function OurExpertiseView() {
-  const t = useTranslations('ourExpertise');
-  const locale = useLocale();
-  const direction = locale === 'ar' ? 'rtl' : 'ltr'; // ✅ same logic as HeroView
-  const isRTL = direction === 'rtl';
+  const t = useTranslations('ourExpertise')
+  const locale = useLocale()
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'
+  const isRTL = direction === 'rtl'
 
   const colors = {
     gold: {
@@ -36,7 +36,7 @@ export default function OurExpertiseView() {
       200: '#E5E1DA',
       700: '#4C4741',
     },
-  };
+  }
 
   const icons = [
     Building2,
@@ -47,14 +47,27 @@ export default function OurExpertiseView() {
     ScrollText,
     Landmark,
     BadgeCheck,
-  ];
+  ]
 
-  const services = t.raw('services') as { title: string; desc: string }[];
+  const services = t.raw('services') as { title: string; desc: string }[]
+
+  // ✅ Type-safe unified fadeIn animation variant
+  const fadeIn: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.1, 0.25, 1] as any, // ✅ TS-safe easing
+      },
+    },
+  }
 
   return (
     <section
       id="services"
-      dir={direction} // ✅ direction applied just like HeroView
+      dir={direction}
       className={isRTL ? 'text-right' : 'text-left'}
       style={{
         position: 'relative',
@@ -63,7 +76,7 @@ export default function OurExpertiseView() {
         overflow: 'hidden',
       }}
     >
-      {/* Subtle top glow */}
+      {/* === Background Glow === */}
       <div
         style={{
           position: 'absolute',
@@ -83,132 +96,173 @@ export default function OurExpertiseView() {
           zIndex: 1,
         }}
       >
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          viewport={{ once: true, amount: 0.8 }}
-          style={{
-            textAlign: 'center',
-            maxWidth: '680px',
-            margin: '0 auto 5rem auto',
-          }}
-        >
-          <p
+        <LazyMotion features={domAnimation}>
+          {/* === Header Section === */}
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
             style={{
-              color: colors.gold[600],
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.15em',
-              marginBottom: '0.75rem',
-              fontFamily: "'Inter', sans-serif",
+              textAlign: 'center',
+              maxWidth: '680px',
+              margin: '0 auto 5rem auto',
             }}
           >
-            {t('sectionLabel')}
-          </p>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '3rem',
-              lineHeight: 1.2,
-              color: colors.gold[700],
-              fontWeight: 700,
-              marginBottom: '1.5rem',
-              textShadow: '0 1px 10px rgba(200,161,40,0.25)',
-            }}
-          >
-            {t('heading')}
-          </h2>
-          <p
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: '1.125rem',
-              lineHeight: 1.7,
-              color: colors.stone[700],
-            }}
-          >
-            {t('intro')}
-          </p>
-        </motion.div>
+            <motion.p
+              variants={fadeIn}
+              viewport={{ once: true }}
+              style={{
+                color: colors.gold[600],
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                marginBottom: '0.75rem',
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
+              {t('sectionLabel')}
+            </motion.p>
 
-        {/* Services Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gap: '3rem',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          }}
-        >
-          {services.map((service, index) => {
-            const Icon = icons[index];
-            return (
-              <motion.div
-                key={service.title}
-                whileHover={{
-                  y: -8,
-                  boxShadow: '0 15px 30px rgba(200,161,40,0.25)',
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                style={{
-                  position: 'relative',
-                  padding: '2.25rem 2rem',
-                  borderRadius: '1rem',
-                  background: `linear-gradient(145deg, rgba(255,255,255,0.85), rgba(250,242,210,0.9))`,
-                  border: `1px solid ${colors.gold[200]}`,
-                  boxShadow: '0 6px 25px -10px rgba(0,0,0,0.08)',
-                  backdropFilter: 'blur(6px)',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                {/* Icon position follows direction */}
-                <div
+            <motion.h2
+              variants={fadeIn}
+              viewport={{ once: true }}
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '3rem',
+                lineHeight: 1.2,
+                color: colors.gold[700],
+                fontWeight: 700,
+                marginBottom: '1.5rem',
+                textShadow: '0 1px 10px rgba(200,161,40,0.25)',
+              }}
+            >
+              {t('heading')}
+            </motion.h2>
+
+            {/* Animated dash line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as any }}
+              viewport={{ once: true }}
+              style={{
+                width: '6rem',
+                height: '0.25rem',
+                borderRadius: '9999px',
+                margin: '0 auto 1.5rem auto',
+                background: `linear-gradient(to right, ${colors.gold[500]}, ${colors.gold[300]})`,
+                transformOrigin: isRTL ? 'right' : 'left',
+              }}
+            />
+
+            <motion.p
+              variants={fadeIn}
+              viewport={{ once: true }}
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '1.125rem',
+                lineHeight: 1.7,
+                color: colors.stone[700],
+              }}
+            >
+              {t('intro')}
+            </motion.p>
+          </motion.div>
+
+          {/* === Services Grid === */}
+          <div
+            style={{
+              display: 'grid',
+              gap: '3rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            }}
+          >
+            {services.map((service, index) => {
+              const Icon = icons[index]
+              return (
+                <motion.div
+                  key={service.title}
+                  variants={fadeIn}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileHover={{
+                    y: -8,
+                    boxShadow: '0 15px 30px rgba(200,161,40,0.25)',
+                    transition: {
+                      type: 'spring',
+                      stiffness: 400,
+                      damping: 18,
+                      duration: 0.2, // ✅ much snappier hover
+                    },
+                  }}
+                  transition={{
+                    duration: 0.8, // ✅ for fade-in only
+                    ease: [0.25, 0.1, 0.25, 1] as any,
+                    delay: index * 0.2,
+                  }}
                   style={{
-                    position: 'absolute',
-                    top: '-1.5rem',
-                    left: isRTL ? 'auto' : '1.5rem',
-                    right: isRTL ? '1.5rem' : 'auto',
-                    background: `linear-gradient(135deg, ${colors.gold[200]}, ${colors.gold[300]})`,
-                    padding: '0.75rem',
-                    borderRadius: '50%',
-                    boxShadow:
-                      '0 2px 10px rgba(200,161,40,0.25), inset 0 0 8px rgba(255,255,255,0.35)',
+                    position: 'relative',
+                    padding: '2.25rem 2rem',
+                    borderRadius: '1rem',
+                    background: `linear-gradient(145deg, rgba(255,255,255,0.85), rgba(250,242,210,0.9))`,
+                    border: `1px solid ${colors.gold[200]}`,
+                    boxShadow: '0 6px 25px -10px rgba(0,0,0,0.08)',
+                    backdropFilter: 'blur(6px)',
+                    transition: 'all 0.3s ease',
                   }}
                 >
-                  <Icon
-                    size={26}
-                    strokeWidth={2.3}
-                    style={{ color: colors.gold[700] }}
-                  />
-                </div>
+                  {/* Icon */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-1.5rem',
+                      left: isRTL ? 'auto' : '1.5rem',
+                      right: isRTL ? '1.5rem' : 'auto',
+                      background: `linear-gradient(135deg, ${colors.gold[200]}, ${colors.gold[300]})`,
+                      padding: '0.75rem',
+                      borderRadius: '50%',
+                      boxShadow:
+                        '0 2px 10px rgba(200,161,40,0.25), inset 0 0 8px rgba(255,255,255,0.35)',
+                    }}
+                  >
+                    <Icon
+                      size={26}
+                      strokeWidth={2.3}
+                      style={{ color: colors.gold[700] }}
+                    />
+                  </div>
 
-                <div style={{ marginTop: '1.5rem' }}>
-                  <h3
-                    style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: '1.25rem',
-                      fontWeight: 600,
-                      color: colors.gold[600],
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    {service.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: '0.95rem',
-                      lineHeight: 1.7,
-                      color: colors.stone[700],
-                    }}
-                  >
-                    {service.desc}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                  <div style={{ marginTop: '1.5rem' }}>
+                    <h3
+                      style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontSize: '1.25rem',
+                        fontWeight: 600,
+                        color: colors.gold[600],
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      {service.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: '0.95rem',
+                        lineHeight: 1.7,
+                        color: colors.stone[700],
+                      }}
+                    >
+                      {service.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            })}
+
+          </div>
+        </LazyMotion>
       </div>
 
       {/* Bottom fade */}
@@ -224,5 +278,5 @@ export default function OurExpertiseView() {
         }}
       />
     </section>
-  );
+  )
 }
